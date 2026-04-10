@@ -27,7 +27,12 @@ public class EnemyHealth : MonoBehaviour
     void Die()
     {
         Debug.Log("El enemigo ha sido destruido.");
-        // Destruye el objeto del enemigo (el Triángulo)
+        // Antes de desaparecer, le damos el polvo al jugador
+        if (PlayerWallet.instance != null)
+        {
+            PlayerWallet.instance.AddAngelDust(15); //La cantidad de polvo que da el enemigo, podemos cambiarlo
+        }
+        // Destruye el objeto del enemigo
         Destroy(gameObject);
     }
 }
