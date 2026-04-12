@@ -5,7 +5,7 @@ public class SceneLoader : MonoBehaviour
 {
     public void LoadLobby()
     {
-        SceneManager.LoadScene("Lobby");
+        SceneManager.LoadScene("Lobby_3D");
     }
 
     public void LoadRoomTest01()
