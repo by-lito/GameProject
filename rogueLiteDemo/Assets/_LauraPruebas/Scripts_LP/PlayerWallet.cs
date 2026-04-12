@@ -40,14 +40,31 @@ public class PlayerWallet : MonoBehaviour
         Debug.Log("¡Nivel superado! Dinero para el Lobby: " + permanentMoney);
     }
 
-    // Para la tienda del nivel
-    public bool CanSpendDust(int cost)
+    // Para la tienda de la RUN
+    // 1. Solo comprueba si tiene el dinero (sin restar nada)
+    public bool CanAfford(int cost)
+    {
+        return angelDust >= cost;
+    }
+
+    // 2. Usar este método para gastar polvo de ángel.
+    public bool SpendDust(int cost)
     {
         if (angelDust >= cost)
         {
+            // Restamos el coste al total de polvo de ángel
             angelDust -= cost;
             return true;
         }
         return false;
+    }
+
+    //Para la tienda del LOBBY
+    // Método para gastar el dinero que no se pierde al morir (Lobby/Nexo)
+    public void SpendPermanentMoney(int amount)
+    {
+        // Restamos la cantidad al total permanente
+        permanentMoney -= amount;
+        Debug.Log("Has gastado dinero permanente. Quedan: " + permanentMoney);
     }
 }

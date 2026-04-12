@@ -5,7 +5,20 @@ public class PlayerInventory : MonoBehaviour
 {
     // Esta es la lista de objetos actuales en la RUN
     public List<Item> currentItems = new List<Item>();
+    public static PlayerInventory instance;//El 'static' hace que esta variable pertenezca a la clase y no a un objeto concreto.
+                                           // Permite que otros scripts accedan a 'PlayerInventory.instance' desde cualquier lugar.
 
+    private void Awake()
+    {
+        if (instance == null)// si no hay instancia asignada se asigna como única
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject); //Esto evita tener dos inventarios funcionando a la vez.
+        }
+    }
     // Método para añadir un objeto al inventario del jugador
     public void AddItem(Item newItem)
     {
