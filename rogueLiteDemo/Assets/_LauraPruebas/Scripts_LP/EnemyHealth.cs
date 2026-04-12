@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -30,4 +30,4 @@ public class EnemyHealth : MonoBehaviour
         // Destruye el objeto del enemigo (el Triángulo)
         Destroy(gameObject);
     }
-}
+}*/

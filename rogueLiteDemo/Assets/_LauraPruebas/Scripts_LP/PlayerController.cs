@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using UnityEngine.InputSystem; // Imprescindible para usar el nuevo sistema de Input de Unity 
 
 public class PlayerController : MonoBehaviour
@@ -63,4 +63,4 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
-}
+}*/
