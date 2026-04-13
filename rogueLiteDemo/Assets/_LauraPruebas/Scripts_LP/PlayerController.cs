@@ -1,4 +1,5 @@
-using System.Collections;
+
+/*using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem; // Imprescindible para usar el nuevo sistema de Input de Unity 
 
@@ -10,9 +11,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
 
     [Header("Ajustes de Combate")]
-    public Transform attackPoint;    // El objeto vacío que pusimos delante del Player
-    public float attackRange = 0.8f; // El radio del círculo rojo (Gizmo)
-    public LayerMask enemyLayers;    // Aquí seleccionamos "Enemies" en el Inspector
+    public Transform attackPoint;    // El objeto vacï¿½o que pusimos delante del Player
+    public float attackRange = 0.8f; // El radio del cï¿½rculo rojo (Gizmo)
+    public LayerMask enemyLayers;    // Aquï¿½ seleccionamos "Enemies" en el Inspector
 
     [Header("Ajustes de Dash")]
     public float dashSpeed = 20f;
@@ -38,7 +39,7 @@ public class PlayerController : MonoBehaviour
         moveInput = value.Get<Vector2>();
     }
 
-    //Lógica del Dash
+    //Lï¿½gica del Dash
     private IEnumerator ExecuteDash()
     {
         canDash = false;
@@ -67,12 +68,12 @@ public class PlayerController : MonoBehaviour
     // Se dispara con el Player Input (Action: Attack)
     public void OnAttack(InputValue value)
     {
-        // Solo atacamos cuando se pulsa el botón (isPressed)
+        // Solo atacamos cuando se pulsa el botï¿½n (isPressed)
         if (value.isPressed)
         {
             Debug.Log("Laura: El Player ha lanzado un ataque");
 
-            // Crear un círculo invisible y detectar qué colisionadores de la capa "Enemies" toca
+            // Crear un cï¿½rculo invisible y detectar quï¿½ colisionadores de la capa "Enemies" toca
             Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayers);
 
             foreach (Collider2D enemy in hitEnemies)
@@ -81,12 +82,12 @@ public class PlayerController : MonoBehaviour
                 EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
                 if (enemyHealth != null)
                 {
-                    enemyHealth.TakeDamage(10f); // El daño que acordamos ayer
+                    enemyHealth.TakeDamage(10f); // El daï¿½o que acordamos ayer
                 }
             }
         }
     }
-    // Configura en el Input Action una acción llamada "Fire" (ej. Click derecho o Botón X)
+    // Configura en el Input Action una acciï¿½n llamada "Fire" (ej. Click derecho o Botï¿½n X)
     public void OnFire(InputValue value)
     {
         if (value.isPressed)
@@ -95,7 +96,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //Método para el Dash, se dispara con el Player Input (Action: Dash), tecla "Q".
+    //Mï¿½todo para el Dash, se dispara con el Player Input (Action: Dash), tecla "Q".
     public void OnDash(InputValue value)
     {
         // Solo dasheamos si podemos y no estamos ya en medio de uno
@@ -108,15 +109,15 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (isDashing) return; //Si se dashea, no aplicamos el movimiento normal
-        // Aplicar movimiento físico
+        // Aplicar movimiento fï¿½sico
         rb.linearVelocity = moveInput * moveSpeed;
     }
 
-    // Dibujamos el círculo en el Editor para que veamos el alcance del ataque
+    // Dibujamos el cï¿½rculo en el Editor para que veamos el alcance del ataque
     void OnDrawGizmosSelected()
     {
         if (attackPoint == null) return;
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
-}
+}*/

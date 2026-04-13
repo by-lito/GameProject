@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -35,4 +35,4 @@ public class EnemyHealth : MonoBehaviour
         // Destruye el objeto del enemigo
         Destroy(gameObject);
     }
-}
+}*/

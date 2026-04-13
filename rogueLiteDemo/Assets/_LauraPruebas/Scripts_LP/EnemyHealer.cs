@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class EnemyHealer : MonoBehaviour
 {
@@ -17,4 +17,4 @@ public class EnemyHealer : MonoBehaviour
             }
         }
     }
-}
+}*/
