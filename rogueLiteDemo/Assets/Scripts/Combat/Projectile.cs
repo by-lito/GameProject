@@ -22,7 +22,7 @@ public class Projectile : MonoBehaviour
         // Si choca con un enemigo
         if (collision.CompareTag("Enemy"))
         {
-            if (collision.TryGetComponent<EnemyHealth>(out EnemyHealth enemy))
+            if (collision.TryGetComponent<Health>(out Health enemy))
             {
                 enemy.TakeDamage(damage);
             }
