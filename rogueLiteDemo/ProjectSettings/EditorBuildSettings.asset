@@ -4,35 +4,6 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-<<<<<<< HEAD
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+  m_Scenes: []
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  m_UseUCBPForAssetBundles: 0
-=======
-    path: Assets/Scenes/MainMenu.unity
-    guid: e11ee563609a83d429ca220db41a9d72
-  - enabled: 1
-    path: Assets/Scenes/Lobby.unity
-    guid: 5de429711b43d7b42afcbac02911f1e5
-  - enabled: 1
-    path: Assets/Scenes/Room_Test_01.unity
-    guid: 928938275f8cd194eb78491a2209bc35
-  - enabled: 1
-    path: Assets/Scenes/Prototype_3D_Base.unity
-    guid: 2b5f0024a0cdf424fa90332d42f95ccf
-  - enabled: 1
-    path: Assets/Scenes/Lobby_3D.unity
-    guid: 4b2b03cfda813654fb4e6f844d522b7d
-  - enabled: 1
-    path: Assets/Scenes/Room_Combat_01.unity
-    guid: a7d5f344ab13c4841aac41734195ff1f
-  - enabled: 1
-    path: Assets/Scenes/Room_Shop_01.unity
-    guid: 16ec53787635d3c49998ea019d13a21b
-  m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
->>>>>>> main

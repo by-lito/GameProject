@@ -4,29 +4,40 @@ public class Projectile : MonoBehaviour
 {
     public float speed = 15f;
     public int damage = 10;
-    public float lifeTime = 2f; // Se destruye solo a los 2 segundos para no llenar la memoria
+    public float lifeTime = 2f; 
 
     void Start()
     {
+        // Se destruye solo a los 2 segundos para no llenar la memoria
         Destroy(gameObject, lifeTime);
     }
 
     void Update()
     {
-        // Mueve la bala hacia la derecha (ajustar si queremos que vaya en otra direcci�n)
-        transform.Translate(Vector2.right * speed * Time.deltaTime);
+        // En 3D usamos Vector3.forward o transform.forward 
+        // para que la bala vaya hacia donde apunta el "cañón"
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    // Cambiamos a OnTriggerEnter (3D) para que detecte colliders en el mapa 3D
+    private void OnTriggerEnter(Collider collision)
     {
         // Si choca con un enemigo
         if (collision.CompareTag("Enemy"))
         {
-            if (collision.TryGetComponent<Health>(out Health enemy))
+            // Usamos la clase base Health de Ángel (Arquitectura Modular)
+            if (collision.TryGetComponent<Health>(out Health health))
             {
-                enemy.TakeDamage(damage);
+                health.TakeDamage(damage);
             }
+            
             Destroy(gameObject); // La bala desaparece al chocar
+        }
+        
+        // Opcional: Que la bala desaparezca si choca con una pared (Escenario)
+        if (collision.CompareTag("Environment"))
+        {
+            Destroy(gameObject);
         }
     }
 }

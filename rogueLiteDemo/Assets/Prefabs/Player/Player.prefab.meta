@@ -1,6 +1,11 @@
 fileFormatVersion: 2
-guid: 74192e1e1a6695145bdfcd6044090797
+<<<<<<<< HEAD:rogueLiteDemo/Assets/_LauraPruebas/Prefabs_LP/Player.prefab.meta
+guid: aee91ab0cd3881c41970600430801bba
 PrefabImporter:
+========
+guid: e11ee563609a83d429ca220db41a9d72
+DefaultImporter:
+>>>>>>>> main:rogueLiteDemo/Assets/Scenes/MainMenu.unity.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

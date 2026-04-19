@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("Ajustes de Movimiento")]
-    public float moveSpeed = 5f;
+    public float moveSpeed = 6f;
     private Rigidbody rb;
     private Vector2 moveInput;
 
@@ -28,10 +28,11 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
+        rb.freezeRotation = true; // Evita que el personaje se caiga de lado
         rb.linearDamping = 5f;
     }
 
+    // Input System: Movimiento
     public void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
@@ -60,6 +61,7 @@ public class PlayerController : MonoBehaviour
         canDash = true;
     }
 
+    // Input System: Ataque Melee
     public void OnAttack(InputValue value)
     {
         if (value.isPressed)
@@ -100,7 +102,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (isDashing) return;
-
+        // En el mapa 3D, el movimiento es en X y Z
         Vector3 move = new Vector3(moveInput.x, 0f, moveInput.y);
         rb.linearVelocity = move * moveSpeed;
     }

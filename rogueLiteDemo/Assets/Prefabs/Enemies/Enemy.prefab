@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1377693306274806582}
   - component: {fileID: -969229480255992347}
   - component: {fileID: -3673464279709463266}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 0
   currentHP: 0
+  dustReward: 15
 --- !u!114 &-969229480255992347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,7 +167,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
