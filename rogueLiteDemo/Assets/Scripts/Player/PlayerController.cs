@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
 
             foreach (Collider enemy in hitEnemies)
             {
+                print("¡Enemigo golpeado: " + enemy.name + "!");
                 Health enemyHealth = enemy.GetComponent<Health>();
                 if (enemyHealth != null)
                 {
