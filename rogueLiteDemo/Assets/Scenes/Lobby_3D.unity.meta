@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:rogueLiteDemo/Assets/_LauraPruebas/Prefabs_LP/Enemy.prefab.meta
+guid: b3f3b3671eb28d943923d3328f21140e
+PrefabImporter:
+========
 guid: 4b2b03cfda813654fb4e6f844d522b7d
 DefaultImporter:
+>>>>>>>> main:rogueLiteDemo/Assets/Scenes/Lobby_3D.unity.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

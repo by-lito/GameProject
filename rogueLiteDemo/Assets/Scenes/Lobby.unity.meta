@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:rogueLiteDemo/Assets/_LauraPruebas/Scenes_LP/Prueba_Movimiento_Combate.unity.meta
+guid: f915df621ca81e740a7967ed7ae73eb6
+========
 guid: 5de429711b43d7b42afcbac02911f1e5
+>>>>>>>> main:rogueLiteDemo/Assets/Scenes/Lobby.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
