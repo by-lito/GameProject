@@ -1,111 +1,84 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Ajustes de Movimiento")]
-    public float moveSpeed = 6f;
+    [Header("Movement")]
+    public float moveSpeed = 5f;
+
     private Rigidbody rb;
     private Vector2 moveInput;
 
-    [Header("Ajustes de Combate")]
+    // ?? Paralysis (used by EnemyInmobilizer and BossPhase2) ??????????
+    private bool isParalyzed = false;
+
+    public void SetParalyzed(bool state)
+    {
+        isParalyzed = state;
+        if (state) moveInput = Vector2.zero;
+    }
+
+    // ?? Action callback (used by BossPhase2 interaction) ?????????????
+    // Subscribers register here to receive the "Action" button press
+    public System.Action OnActionPressed;
+
+    [Header("Combat")]
     public Transform attackPoint;
-    public float attackRange = 0.8f;
+    public float attackRange = 1f;
     public LayerMask enemyLayers;
-
-    [Header("Ajustes de Dash")]
-    public float dashSpeed = 20f;
-    public float dashDuration = 0.2f;
-    public float dashCooldown = 1f;
-    private bool isDashing;
-    private bool canDash = true;
-
-    [Header("Ataque a Rango")]
-    public GameObject projectilePrefab;
-    public Transform shootPoint;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true; // Evita que el personaje se caiga de lado
-        rb.linearDamping = 5f;
+        rb.freezeRotation = true;
     }
 
-    // Input System: Movimiento
     public void OnMove(InputValue value)
     {
+        if (isParalyzed) return;
         moveInput = value.Get<Vector2>();
     }
 
-    private IEnumerator ExecuteDash()
-    {
-        canDash = false;
-        isDashing = true;
-
-        float originalDrag = rb.linearDamping;
-        rb.linearDamping = 0f;
-
-        Vector3 dashDir = moveInput == Vector2.zero
-            ? transform.forward
-            : new Vector3(moveInput.x, 0f, moveInput.y).normalized;
-
-        rb.linearVelocity = dashDir * dashSpeed;
-
-        yield return new WaitForSeconds(dashDuration);
-
-        rb.linearDamping = originalDrag;
-        isDashing = false;
-
-        yield return new WaitForSeconds(dashCooldown);
-        canDash = true;
-    }
-
-    // Input System: Ataque Melee
     public void OnAttack(InputValue value)
     {
-        if (value.isPressed)
-        {
-            Collider[] hitEnemies = Physics.OverlapSphere(
-                attackPoint.position,
-                attackRange,
-                enemyLayers
-            );
+        if (!value.isPressed || isParalyzed) return;
 
-            foreach (Collider enemy in hitEnemies)
-            {
-                print("¡Enemigo golpeado: " + enemy.name + "!");
-                Health enemyHealth = enemy.GetComponent<Health>();
-                if (enemyHealth != null)
-                {
-                    enemyHealth.TakeDamage(10f);
-                }
-            }
+        Collider[] hitEnemies = Physics.OverlapSphere(
+            attackPoint.position,
+            attackRange,
+            enemyLayers
+        );
+
+        foreach (Collider enemy in hitEnemies)
+        {
+            IDamageable dmg = enemy.GetComponent<IDamageable>();
+            dmg?.TakeDamage(10f);
         }
     }
 
-    public void OnFire(InputValue value)
+    /// <summary>
+    /// Called by Unity Input System when the Action button is pressed.
+    /// Map a button (e.g. E / South gamepad) to "Action" in your InputActions asset.
+    /// </summary>
+    public void OnAction(InputValue value)
     {
-        if (value.isPressed)
-        {
-            Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation);
-        }
-    }
-
-    public void OnDash(InputValue value)
-    {
-        if (value.isPressed && canDash && !isDashing)
-        {
-            StartCoroutine(ExecuteDash());
-        }
+        if (!value.isPressed) return;
+        OnActionPressed?.Invoke();
     }
 
     void FixedUpdate()
     {
-        if (isDashing) return;
-        // En el mapa 3D, el movimiento es en X y Z
+        if (isParalyzed)
+        {
+            rb.linearVelocity = new Vector3(0f, rb.linearVelocity.y, 0f);
+            return;
+        }
+
         Vector3 move = new Vector3(moveInput.x, 0f, moveInput.y);
-        rb.linearVelocity = move * moveSpeed;
+        Vector3 velocity = rb.linearVelocity;
+        velocity.x = move.x * moveSpeed;
+        velocity.z = move.z * moveSpeed;
+        rb.linearVelocity = velocity;
     }
 
     void OnDrawGizmosSelected()

@@ -13,6 +13,9 @@ public class EnemyBase : MonoBehaviour
     public float detectionRange = 8f;
     public float attackRange = 2f;
 
+    [Header("Economy")]
+    public int angelDustValue = 0; // Set > 0 on enemies that should drop currency
+
     protected virtual void Awake()
     {
         GameObject p = GameObject.FindGameObjectWithTag("Player");
@@ -48,7 +51,6 @@ public class EnemyBase : MonoBehaviour
     protected virtual void MoveToPlayer()
     {
         Vector3 direction = (player.position - transform.position).normalized;
-
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
 
@@ -60,6 +62,18 @@ public class EnemyBase : MonoBehaviour
 
     protected virtual void HandleDeath()
     {
+        DropAngelDust();
         Destroy(gameObject);
+    }
+
+    protected void DropAngelDust()
+    {
+        if (angelDustValue <= 0) return;
+
+        PlayerWallet wallet = FindObjectOfType<PlayerWallet>();
+        if (wallet != null)
+            wallet.AddAngelDust(angelDustValue);
+        else
+            Debug.LogWarning("PlayerWallet not found in scene.");
     }
 }
