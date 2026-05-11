@@ -1,41 +1,67 @@
 using UnityEngine;
 
+/// <summary>
+/// Gestiona el comportamiento físico, el movimiento lineal y la detección de colisiones
+/// de los proyectiles disparados por el jugador en un entorno 3D.
+/// </summary>
+[RequireComponent(typeof(Rigidbody))]
 public class Projectile : MonoBehaviour
 {
+    [Header("Ajustes de Proyectil")]
+    [Tooltip("Velocidad de desplazamiento del proyectil.")]
     public float speed = 15f;
-    public int damage = 10;
-    public float lifeTime = 2f; 
 
+    [Tooltip("Cantidad de daño que infligirá al impactar con un enemigo.")]
+    public int damage = 10;
+
+    [Tooltip("Tiempo en segundos antes de que el proyectil se destruya automáticamente.")]
+    public float lifeTime = 2f;
+
+    private Rigidbody rb;
+
+    /// <summary>
+    /// Inicializa los componentes físicos y aplica la fuerza inicial.
+    /// </summary>
     void Start()
     {
-        // Se destruye solo a los 2 segundos para no llenar la memoria
+        rb = GetComponent<Rigidbody>();
+
+        // Configuramos el Rigidbody para que no se vea afectado por la gravedad
+        // y se mueva de forma lineal constante.
+        rb.useGravity = false;
+
+        // Aplicamos velocidad en la dirección 'forward' del proyectil.
+        // El proyectil viajará hacia donde apunte el eje Z (azul) del ShootPoint.
+        rb.linearVelocity = transform.forward * speed;
+
+        // Gestión de memoria: eliminamos el objeto tras su tiempo de vida.
         Destroy(gameObject, lifeTime);
     }
 
-    void Update()
-    {
-        // En 3D usamos Vector3.forward o transform.forward 
-        // para que la bala vaya hacia donde apunta el "cañón"
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-    }
-
-    // Cambiamos a OnTriggerEnter (3D) para que detecte colliders en el mapa 3D
+    /// <summary>
+    /// Maneja la detección de colisiones mediante triggers para aplicar daño o destruir el proyectil.
+    /// </summary>
+    /// <param name="collision">El Collider del objeto con el que se ha producido el impacto.</param>
     private void OnTriggerEnter(Collider collision)
     {
-        // Si choca con un enemigo
-        if (collision.CompareTag("Enemy"))
+        // Evitamos que el proyectil se destruya al colisionar con el propio jugador durante el spawn.
+        if (collision.CompareTag("Player")) return;
+
+        // Verificamos si el objeto impactado es un enemigo.
+        if (collision.CompareTag("Enemy") || collision.CompareTag("Enemies"))
         {
-            // Usamos la clase base Health de Ángel (Arquitectura Modular)
+            // Intentamos obtener el componente Health para aplicar daño.
             if (collision.TryGetComponent<Health>(out Health health))
             {
                 health.TakeDamage(damage);
             }
-            
-            Destroy(gameObject); // La bala desaparece al chocar
+
+            // El proyectil se destruye tras impactar con un objetivo válido.
+            Destroy(gameObject);
         }
-        
-        // Opcional: Que la bala desaparezca si choca con una pared (Escenario)
-        if (collision.CompareTag("Environment"))
+
+        // El proyectil se destruye al impactar con elementos del escenario (paredes, obstáculos).
+        if (collision.CompareTag("Environment") || collision.CompareTag("Walls"))
         {
             Destroy(gameObject);
         }
