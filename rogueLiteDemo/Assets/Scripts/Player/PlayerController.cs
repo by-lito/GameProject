@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private bool isParalyzed = false;
 
+    // [NUEVO] Referencia al componente Animator del sprite Player_Walk_012 hijo
+    private Animator anim;
+
     [Header("Ajustes de Combate")]
     public Transform attackPoint;
     public float attackRange = 0.8f;
@@ -43,6 +46,9 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         rb.linearDamping = 5f;
+
+        // [NUEVO] Busca el Animator en sus componentes hijos automáticamente
+        anim = GetComponentInChildren<Animator>();
     }
 
     // --- MÉTODOS DE ENTRADA (INPUT SYSTEM) ---
@@ -150,6 +156,28 @@ public class PlayerController : MonoBehaviour
         {
             moveInput = Vector2.zero;
             rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+
+            // [NUEVO] Si está paralizado, paramos la animación de golpe
+            if (anim != null) anim.SetFloat("Speed", 0f);
+        }
+    }
+
+    void Update()
+    {
+        // [NUEVO] Actualizamos el Animator en cada frame con los datos de las teclas
+        if (anim != null && !isParalyzed)
+        {
+            // Si nos estamos moviendo, actualizamos la dirección a la que miramos
+            if (moveInput.sqrMagnitude > 0.01f)
+            {
+                anim.SetFloat("Horizontal", moveInput.x);
+                anim.SetFloat("Vertical", moveInput.y);
+            }
+
+            // Pasamos la velocidad (magnitud) al parámetro Speed para cambiar entre Idle y Walk
+            // Usamos el estado isDashing para que si hace un dash, la animación reaccione en consecuencia
+            float currentSpeed = isDashing ? 1f : moveInput.magnitude;
+            anim.SetFloat("Speed", currentSpeed);
         }
     }
 
