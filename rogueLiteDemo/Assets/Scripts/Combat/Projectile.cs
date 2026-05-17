@@ -2,41 +2,50 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float speed = 15f;
+    public float speed = 20f;
     public int damage = 10;
-    public float lifeTime = 2f; 
+    public float lifeTime = 5f;
+
+    private Rigidbody rb;
+    private float spawnTime;
 
     void Start()
     {
-        // Se destruye solo a los 2 segundos para no llenar la memoria
+        rb = GetComponent<Rigidbody>();
+        rb.useGravity = false; // Forzamos que no caiga
+
+        // Disparar hacia adelante
+        rb.linearVelocity = transform.forward * speed;
+
+        spawnTime = Time.time;
         Destroy(gameObject, lifeTime);
     }
 
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        // En 3D usamos Vector3.forward o transform.forward 
-        // para que la bala vaya hacia donde apunta el "cañón"
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-    }
+        // 1. Ignorar al jugador siempre
+        if (other.CompareTag("Player")) return;
 
-    // Cambiamos a OnTriggerEnter (3D) para que detecte colliders en el mapa 3D
-    private void OnTriggerEnter(Collider collision)
-    {
-        // Si choca con un enemigo
-        if (collision.CompareTag("Enemy"))
+        // 2. Si es un enemigo, daño y muerte inmediata
+        if (other.CompareTag("Enemy"))
         {
-            // Usamos la clase base Health de Ángel (Arquitectura Modular)
-            if (collision.TryGetComponent<Health>(out Health health))
+            if (other.TryGetComponent<Health>(out Health health))
             {
                 health.TakeDamage(damage);
             }
-            
-            Destroy(gameObject); // La bala desaparece al chocar
+            Destroy(gameObject);
         }
-        
-        // Opcional: Que la bala desaparezca si choca con una pared (Escenario)
-        if (collision.CompareTag("Environment"))
+
+        // 3. SI CHOCA CON EL SUELO O PAREDES
+        if (other.CompareTag("Environment") || other.CompareTag("Walls"))
         {
+            // ESCUDO: Si ha pasado menos de 0.2 segundos, IGNOTAMOS el suelo
+            if (Time.time < spawnTime + 0.2f)
+            {
+                return;
+            }
+
+            // Si ya está lejos, entonces sí se destruye
             Destroy(gameObject);
         }
     }

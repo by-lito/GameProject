@@ -2,16 +2,26 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Clase principal para el control del jugador. 
+/// Gestiona movimiento en 3D, combate (melee y rango), dash y estados alterados.
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     [Header("Ajustes de Movimiento")]
+    [Tooltip("Velocidad de movimiento base del jugador.")]
     public float moveSpeed = 6f;
     private Rigidbody rb;
     private Vector2 moveInput;
+    private bool isParalyzed = false;
+
+    // [NUEVO] Referencia al componente Animator del sprite Player_Walk_012 hijo
+    private Animator anim;
 
     [Header("Ajustes de Combate")]
     public Transform attackPoint;
     public float attackRange = 0.8f;
+    public float meleeDamage = 10f;
     public LayerMask enemyLayers;
 
     [Header("Ajustes de Dash")]
@@ -25,23 +35,99 @@ public class PlayerController : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform shootPoint;
 
+    /// <summary>
+    /// Evento que se dispara al pulsar el botón de Acción.
+    /// Utilizado para interacciones con el entorno y fases del Jefe.
+    /// </summary>
+    public System.Action OnActionPressed;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true; // Evita que el personaje se caiga de lado
+        rb.freezeRotation = true;
         rb.linearDamping = 5f;
+
+        // [NUEVO] Busca el Animator en sus componentes hijos automáticamente
+        anim = GetComponentInChildren<Animator>();
     }
 
-    // Input System: Movimiento
+    // --- MÉTODOS DE ENTRADA (INPUT SYSTEM) ---
+
+    /// <summary>
+    /// Recibe la entrada de movimiento del Input System.
+    /// </summary>
+    /// <param name="value">Valor vectorial (X, Y) de la entrada.</param>
     public void OnMove(InputValue value)
     {
+        if (isParalyzed || isDashing) return;
         moveInput = value.Get<Vector2>();
     }
 
+    /// <summary>
+    /// Ejecuta un ataque de área circular (Melee) frente al jugador.
+    /// </summary>
+    public void OnAttack(InputValue value)
+    {
+        if (!value.isPressed || isParalyzed || isDashing) return;
+
+        Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
+        foreach (Collider enemy in hitEnemies)
+        {
+            IDamageable dmg = enemy.GetComponent<IDamageable>();
+            if (dmg != null) dmg.TakeDamage(meleeDamage);
+            else
+            {
+                Health enemyHealth = enemy.GetComponent<Health>();
+                if (enemyHealth != null) enemyHealth.TakeDamage(meleeDamage);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Instancia un proyectil en la posición de disparo.
+    /// </summary>
+    public void OnFire(InputValue value)
+    {
+        if (value.isPressed && !isParalyzed && !isDashing)
+        {
+            if (projectilePrefab != null && shootPoint != null)
+            {
+                Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Activa la habilidad de Dash si está disponible y el jugador no está paralizado.
+    /// </summary>
+    public void OnDash(InputValue value)
+    {
+        if (value.isPressed && canDash && !isDashing && !isParalyzed)
+        {
+            StartCoroutine(ExecuteDash());
+        }
+    }
+
+    /// <summary>
+    /// Invoca el evento de acción para interactuar con objetos o jefes.
+    /// </summary>
+    public void OnAction(InputValue value)
+    {
+        if (!value.isPressed) return;
+        OnActionPressed?.Invoke();
+    }
+
+    // --- LÓGICA DE HABILIDADES ---
+
+    /// <summary>
+    /// Corrutina que gestiona el desplazamiento rápido (Dash) y su tiempo de reutilización.
+    /// </summary>
     private IEnumerator ExecuteDash()
     {
         canDash = false;
         isDashing = true;
+
+        if (anim != null) anim.SetBool("isDashing", true);// [NUEVO] Activamos el parámetro isDashing en el Animator para cambiar a la animación de dash
 
         float originalDrag = rb.linearDamping;
         rb.linearDamping = 0f;
@@ -56,58 +142,80 @@ public class PlayerController : MonoBehaviour
 
         rb.linearDamping = originalDrag;
         isDashing = false;
+        if (anim != null) anim.SetBool("isDashing", false);// [NUEVO] Desactivamos el parámetro isDashing para volver a la animación normal
 
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
 
-    // Input System: Ataque Melee
-    public void OnAttack(InputValue value)
+    /// <summary>
+    /// Cambia el estado de parálisis del jugador.
+    /// </summary>
+    /// <param name="state">True para paralizar, False para liberar.</param>
+    public void SetParalyzed(bool state)
     {
-        if (value.isPressed)
+        isParalyzed = state;
+        if (state)
         {
-            Collider[] hitEnemies = Physics.OverlapSphere(
-                attackPoint.position,
-                attackRange,
-                enemyLayers
-            );
+            moveInput = Vector2.zero;
+            rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
 
-            foreach (Collider enemy in hitEnemies)
+            // [NUEVO] Si está paralizado, paramos la animación de golpe
+            if (anim != null) anim.SetFloat("Speed", 0f);
+        }
+    }
+
+    void Update()
+    {
+        // Actualizamos el Animator en cada frame con los datos de las teclas o del estado
+        if (anim != null && !isParalyzed)
+        {
+            // CASO 1: Si nos estamos moviendo de forma normal caminando (NO estamos haciendo dash)
+            if (moveInput.sqrMagnitude > 0.01f && !isDashing)
             {
-                print("¡Enemigo golpeado: " + enemy.name + "!");
-                Health enemyHealth = enemy.GetComponent<Health>();
-                if (enemyHealth != null)
+                // [LIMPIO] Pasamos los controles limpios en directo (sin el * -1f) para que responda bien a la lista original de Unity
+                anim.SetFloat("Horizontal", moveInput.x);
+                anim.SetFloat("Vertical", moveInput.y);
+            }
+            // CASO 2: Si estamos haciendo un Dash 
+            else if (isDashing)
+            {
+                // Si estás pulsando alguna tecla de dirección durante el Dash, usamos esa dirección limpia
+                if (moveInput.sqrMagnitude > 0.01f)
                 {
-                    enemyHealth.TakeDamage(10f);
+                    anim.SetFloat("Horizontal", moveInput.x);
+                    anim.SetFloat("Vertical", moveInput.y);
+                }
+                else
+                {
+                    // Si haces un dash estático, leemos el Rigidbody mapeando el eje Z del mundo 3D a la Y del Animator
+                    Vector3 dashDirection = rb.linearVelocity.normalized;
+                    if (dashDirection.sqrMagnitude > 0.01f)
+                    {
+                        anim.SetFloat("Horizontal", dashDirection.x);
+                        anim.SetFloat("Vertical", dashDirection.z);
+                    }
                 }
             }
-        }
-    }
 
-    public void OnFire(InputValue value)
-    {
-        if (value.isPressed)
-        {
-            Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation);
-        }
-    }
-
-    public void OnDash(InputValue value)
-    {
-        if (value.isPressed && canDash && !isDashing)
-        {
-            StartCoroutine(ExecuteDash());
+            // Pasamos la velocidad (magnitud) al parámetro Speed para cambiar entre Idle y Walk
+            float currentSpeed = isDashing ? 1f : moveInput.magnitude;
+            anim.SetFloat("Speed", currentSpeed);
         }
     }
 
     void FixedUpdate()
     {
-        if (isDashing) return;
-        // En el mapa 3D, el movimiento es en X y Z
+        if (isDashing || isParalyzed) return;
+
         Vector3 move = new Vector3(moveInput.x, 0f, moveInput.y);
-        rb.linearVelocity = move * moveSpeed;
+        // Mantenemos la velocidad vertical (gravedad) mientras aplicamos velocidad en X y Z
+        rb.linearVelocity = new Vector3(move.x * moveSpeed, rb.linearVelocity.y, move.z * moveSpeed);
     }
 
+    /// <summary>
+    /// Dibuja el rango de ataque en el Editor de Unity para facilitar el ajuste de parámetros.
+    /// </summary>
     void OnDrawGizmosSelected()
     {
         if (attackPoint == null) return;

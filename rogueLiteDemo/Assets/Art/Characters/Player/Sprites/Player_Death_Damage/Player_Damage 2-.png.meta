@@ -1,0 +1,949 @@
+fileFormatVersion: 2
+guid: 5a4ab5af9ee5c5e489f8f2240ed817f6
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7472375816103828031
+    second: Player_Damage 2-_0
+  - first:
+      213: -1456102380555528160
+    second: Player_Damage 2-_1
+  - first:
+      213: -3613421455839418441
+    second: Player_Damage 2-_2
+  - first:
+      213: -3924700271575406510
+    second: Player_Damage 2-_3
+  - first:
+      213: -5452632299450534037
+    second: Player_Damage 2-_4
+  - first:
+      213: 6651715124009421002
+    second: Player_Damage 2-_5
+  - first:
+      213: 3261334874791464382
+    second: Player_Damage 2-_6
+  - first:
+      213: 155589309264160631
+    second: Player_Damage 2-_7
+  - first:
+      213: 3357156750940594249
+    second: Player_Damage 2-_8
+  - first:
+      213: -5738247407691143815
+    second: Player_Damage 2-_9
+  - first:
+      213: 6406451083301841142
+    second: Player_Damage 2-_10
+  - first:
+      213: -1324399041025215604
+    second: Player_Damage 2-_11
+  - first:
+      213: -758418385778924238
+    second: Player_Damage 2-_12
+  - first:
+      213: 7620385820883733511
+    second: Player_Damage 2-_13
+  - first:
+      213: -2544433488293156925
+    second: Player_Damage 2-_14
+  - first:
+      213: -101885067963975946
+    second: Player_Damage 2-_15
+  - first:
+      213: 6883000178415929406
+    second: Player_Damage 2-_16
+  - first:
+      213: 823411876973343465
+    second: Player_Damage 2-_17
+  - first:
+      213: -4720595391511777355
+    second: Player_Damage 2-_18
+  - first:
+      213: 1896670408192241099
+    second: Player_Damage 2-_19
+  - first:
+      213: -4374711030571627603
+    second: Player_Damage 2-_20
+  - first:
+      213: -7290749942571798447
+    second: Player_Damage 2-_21
+  - first:
+      213: -7026933553936806209
+    second: Player_Damage 2-_22
+  - first:
+      213: 5521291521727688676
+    second: Player_Damage 2-_23
+  - first:
+      213: -8236857658485490656
+    second: Player_Damage 2-_24
+  - first:
+      213: -8311928598120836023
+    second: Player_Damage 2-_25
+  - first:
+      213: 1160029685072032342
+    second: Player_Damage 2-_26
+  - first:
+      213: -7563306374308412217
+    second: Player_Damage 2-_27
+  - first:
+      213: 225348687387200715
+    second: Player_Damage 2-_28
+  - first:
+      213: 764409906087519245
+    second: Player_Damage 2-_29
+  - first:
+      213: -3468662022030763285
+    second: Player_Damage 2-_30
+  - first:
+      213: -8467833202292606977
+    second: Player_Damage 2-_31
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Player_Damage 2-_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 85
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3a9613e63633b760800000000000000
+      internalID: 7472375816103828031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_1
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 85
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02813628992eacbe0800000000000000
+      internalID: -1456102380555528160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_2
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 85
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b7aae4a45c8addc0800000000000000
+      internalID: -3613421455839418441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 85
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2586ede95e9a889c0800000000000000
+      internalID: -3924700271575406510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 85
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b67fd6c10db5454b0800000000000000
+      internalID: -5452632299450534037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 85
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac8cca9b9a3af4c50800000000000000
+      internalID: 6651715124009421002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_6
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 85
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebdc9811ac6924d20800000000000000
+      internalID: 3261334874791464382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_7
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 85
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 777e98507a3c82200800000000000000
+      internalID: 155589309264160631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 61
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9406e1b2744079e20800000000000000
+      internalID: 3357156750940594249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_9
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 61
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 975634f9266ad50b0800000000000000
+      internalID: -5738247407691143815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_10
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 61
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f86f13415948e850800000000000000
+      internalID: 6406451083301841142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_11
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 61
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c83f2d2d61ace9de0800000000000000
+      internalID: -1324399041025215604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_12
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 61
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 235a5841f7e8975f0800000000000000
+      internalID: -758418385778924238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_13
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 61
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70cc231978c01c960800000000000000
+      internalID: 7620385820883733511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_14
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 61
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c7adaf293b50bcd0800000000000000
+      internalID: -2544433488293156925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_15
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 61
+        width: 16
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f6371c0218069ef0800000000000000
+      internalID: -101885067963975946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 37
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e388e6fc134558f50800000000000000
+      internalID: 6883000178415929406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_17
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 37
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e275de4db85d6b00800000000000000
+      internalID: 823411876973343465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_18
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 37
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5bf289090831d7eb0800000000000000
+      internalID: -4720595391511777355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_19
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 37
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcd2b40ffa3525a10800000000000000
+      internalID: 1896670408192241099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_20
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 37
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dab8bc3fe77e943c0800000000000000
+      internalID: -4374711030571627603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_21
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 37
+        width: 15
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 150fec62e8d02da90800000000000000
+      internalID: -7290749942571798447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_22
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 37
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbec259b9215b7e90800000000000000
+      internalID: -7026933553936806209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_23
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 37
+        width: 16
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ef64fdc2619f9c40800000000000000
+      internalID: 5521291521727688676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_24
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 8
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02c3480b99dc0bd80800000000000000
+      internalID: -8236857658485490656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_25
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 8
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 944d89e7af816ac80800000000000000
+      internalID: -8311928598120836023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_26
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 8
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65270ab3ad0491010800000000000000
+      internalID: 1160029685072032342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_27
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 8
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c446e7bcecb90790800000000000000
+      internalID: -7563306374308412217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_28
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 8
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcc805eef69902300800000000000000
+      internalID: 225348687387200715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_29
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 8
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d04e22372cabb9a00800000000000000
+      internalID: 764409906087519245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_30
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 8
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bead7fac446dcdfc0800000000000000
+      internalID: -3468662022030763285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_Damage 2-_31
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 8
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff7371821963c7a80800000000000000
+      internalID: -8467833202292606977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Player_Damage 2-_0: 7472375816103828031
+      Player_Damage 2-_1: -1456102380555528160
+      Player_Damage 2-_10: 6406451083301841142
+      Player_Damage 2-_11: -1324399041025215604
+      Player_Damage 2-_12: -758418385778924238
+      Player_Damage 2-_13: 7620385820883733511
+      Player_Damage 2-_14: -2544433488293156925
+      Player_Damage 2-_15: -101885067963975946
+      Player_Damage 2-_16: 6883000178415929406
+      Player_Damage 2-_17: 823411876973343465
+      Player_Damage 2-_18: -4720595391511777355
+      Player_Damage 2-_19: 1896670408192241099
+      Player_Damage 2-_2: -3613421455839418441
+      Player_Damage 2-_20: -4374711030571627603
+      Player_Damage 2-_21: -7290749942571798447
+      Player_Damage 2-_22: -7026933553936806209
+      Player_Damage 2-_23: 5521291521727688676
+      Player_Damage 2-_24: -8236857658485490656
+      Player_Damage 2-_25: -8311928598120836023
+      Player_Damage 2-_26: 1160029685072032342
+      Player_Damage 2-_27: -7563306374308412217
+      Player_Damage 2-_28: 225348687387200715
+      Player_Damage 2-_29: 764409906087519245
+      Player_Damage 2-_3: -3924700271575406510
+      Player_Damage 2-_30: -3468662022030763285
+      Player_Damage 2-_31: -8467833202292606977
+      Player_Damage 2-_4: -5452632299450534037
+      Player_Damage 2-_5: 6651715124009421002
+      Player_Damage 2-_6: 3261334874791464382
+      Player_Damage 2-_7: 155589309264160631
+      Player_Damage 2-_8: 3357156750940594249
+      Player_Damage 2-_9: -5738247407691143815
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
