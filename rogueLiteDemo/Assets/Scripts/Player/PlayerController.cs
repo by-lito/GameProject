@@ -127,6 +127,8 @@ public class PlayerController : MonoBehaviour
         canDash = false;
         isDashing = true;
 
+        if (anim != null) anim.SetBool("isDashing", true);// [NUEVO] Activamos el parámetro isDashing en el Animator para cambiar a la animación de dash
+
         float originalDrag = rb.linearDamping;
         rb.linearDamping = 0f;
 
@@ -140,6 +142,7 @@ public class PlayerController : MonoBehaviour
 
         rb.linearDamping = originalDrag;
         isDashing = false;
+        if (anim != null) anim.SetBool("isDashing", false);// [NUEVO] Desactivamos el parámetro isDashing para volver a la animación normal
 
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
@@ -164,18 +167,38 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // [NUEVO] Actualizamos el Animator en cada frame con los datos de las teclas
+        // Actualizamos el Animator en cada frame con los datos de las teclas o del estado
         if (anim != null && !isParalyzed)
         {
-            // Si nos estamos moviendo, actualizamos la dirección a la que miramos
-            if (moveInput.sqrMagnitude > 0.01f)
+            // CASO 1: Si nos estamos moviendo de forma normal caminando (NO estamos haciendo dash)
+            if (moveInput.sqrMagnitude > 0.01f && !isDashing)
             {
+                // [LIMPIO] Pasamos los controles limpios en directo (sin el * -1f) para que responda bien a la lista original de Unity
                 anim.SetFloat("Horizontal", moveInput.x);
                 anim.SetFloat("Vertical", moveInput.y);
             }
+            // CASO 2: Si estamos haciendo un Dash 
+            else if (isDashing)
+            {
+                // Si estás pulsando alguna tecla de dirección durante el Dash, usamos esa dirección limpia
+                if (moveInput.sqrMagnitude > 0.01f)
+                {
+                    anim.SetFloat("Horizontal", moveInput.x);
+                    anim.SetFloat("Vertical", moveInput.y);
+                }
+                else
+                {
+                    // Si haces un dash estático, leemos el Rigidbody mapeando el eje Z del mundo 3D a la Y del Animator
+                    Vector3 dashDirection = rb.linearVelocity.normalized;
+                    if (dashDirection.sqrMagnitude > 0.01f)
+                    {
+                        anim.SetFloat("Horizontal", dashDirection.x);
+                        anim.SetFloat("Vertical", dashDirection.z);
+                    }
+                }
+            }
 
             // Pasamos la velocidad (magnitud) al parámetro Speed para cambiar entre Idle y Walk
-            // Usamos el estado isDashing para que si hace un dash, la animación reaccione en consecuencia
             float currentSpeed = isDashing ? 1f : moveInput.magnitude;
             anim.SetFloat("Speed", currentSpeed);
         }
