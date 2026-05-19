@@ -1,11 +1,32 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class FirebaseTestButtons : MonoBehaviour
 {
+    [Header("Campos de autenticación")]
+    [SerializeField] private TMP_InputField emailInput;
+    [SerializeField] private TMP_InputField passwordInput;
+
+    public void RegisterTest()
+    {
+        string email = emailInput.text;
+        string password = passwordInput.text;
+
+        FirebaseAuthHandler.Instance.RegisterWithEmail(email, password);
+    }
+
     public void LoginTest()
     {
-        FirebaseAuthHandler.Instance.SignInAnonymously();
+        string email = emailInput.text;
+        string password = passwordInput.text;
+
+        FirebaseAuthHandler.Instance.LoginWithEmail(email, password);
+    }
+
+    public void LogoutTest()
+    {
+        FirebaseAuthHandler.Instance.Logout();
     }
 
     public void SaveTest()
