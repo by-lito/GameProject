@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e396c3b32249840b2fe82ff2b56074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 0
-  currentHP: 0
+  maxHP: 100
+  currentHP: 100
   dustReward: 15
 --- !u!212 &-3673464279709463266
 SpriteRenderer:
@@ -152,8 +152,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.00083088875, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 7275587250928016836, guid: f45eb766959e0544293ff2ce1de4d9bc, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -190,12 +190,12 @@ MonoBehaviour:
   damage: 10
   detectionRange: 8
   attackRange: 2
-  angelDustValue: 0
-  projectilePrefab: {fileID: 0}
+  angelDustValue: 15
+  projectilePrefab: {fileID: 5831635697272505365, guid: fa51bfd978b0ce44a8cba94dbea91441, type: 3}
   shootPoint: {fileID: 0}
-  attackCooldown: 2
+  attackCooldown: 1
   knockbackForce: 8
-  relocateRadius: 5
+  relocateRadius: 4
   immobileDuration: 1
 --- !u!1 &8585056357440927342
 GameObject:
