@@ -70,6 +70,8 @@ public class PlayerController : MonoBehaviour
     {
         if (!value.isPressed || isParalyzed || isDashing) return;
 
+        // Activamos el trigger de ataque para reproducir la animación
+        if (anim != null) anim.SetTrigger("isAttacking"); 
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider enemy in hitEnemies)
         {
@@ -90,6 +92,8 @@ public class PlayerController : MonoBehaviour
     {
         if (value.isPressed && !isParalyzed && !isDashing)
         {
+            // Activamos el trigger de disparo para reproducir la animación
+            if (anim != null) anim.SetTrigger("isShooting");
             if (projectilePrefab != null && shootPoint != null)
             {
                 Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation);
@@ -173,7 +177,7 @@ public class PlayerController : MonoBehaviour
             // CASO 1: Si nos estamos moviendo de forma normal caminando (NO estamos haciendo dash)
             if (moveInput.sqrMagnitude > 0.01f && !isDashing)
             {
-                // [LIMPIO] Pasamos los controles limpios en directo (sin el * -1f) para que responda bien a la lista original de Unity
+                //Pasamos los controles limpios en directo (sin el * -1f) para que responda bien a la lista original de Unity
                 anim.SetFloat("Horizontal", moveInput.x);
                 anim.SetFloat("Vertical", moveInput.y);
             }
