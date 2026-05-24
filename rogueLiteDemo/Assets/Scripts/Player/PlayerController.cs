@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
+    /// <summary>  
     /// Instancia un proyectil en la posición de disparo.
     /// </summary>
     public void OnFire(InputValue value)
@@ -94,9 +94,24 @@ public class PlayerController : MonoBehaviour
         {
             // Activamos el trigger de disparo para reproducir la animación
             if (anim != null) anim.SetTrigger("isShooting");
+
             if (projectilePrefab != null && shootPoint != null)
             {
-                Instantiate(projectilePrefab, shootPoint.position, shootPoint.rotation);
+                // 1. Instanciamos el proyectil verde en el ShootPoint
+                GameObject bullet = Instantiate(projectilePrefab, shootPoint.position, Quaternion.identity);
+
+                // 2. Obtenemos la última dirección en la que miraba Aurora desde los parámetros de su Animator
+                Vector2 fireDirection = new Vector2(anim.GetFloat("Horizontal"), anim.GetFloat("Vertical"));
+
+                // Si por lo que sea da 0 (ej. al empezar), disparamos hacia abajo o al frente por defecto
+                if (fireDirection.sqrMagnitude < 0.01f) fireDirection = Vector2.down;
+
+                // 3. Le pasamos los datos al script del proyectil
+                Projectile scriptProyectil = bullet.GetComponent<Projectile>();
+                if (scriptProyectil != null)
+                {
+                    scriptProyectil.SetupDirection(fireDirection);
+                }
             }
         }
     }
