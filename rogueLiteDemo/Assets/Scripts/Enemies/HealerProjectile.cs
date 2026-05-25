@@ -25,9 +25,13 @@ public class HealerProjectile : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        // Heal player (inverted mechanic: enemy projectile heals)
-        IDamageable damageable = other.GetComponent<IDamageable>();
-        damageable?.Heal(healAmount);
+        // Llamamos a TakeDamage. En el Health invertido, para el Player
+        // esto significa SUMAR vida a la barra de purificación y activar "isHit" y se vea la aniamción de daño.
+        Health playerHealth = other.GetComponent<Health>();
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(healAmount);
+        }
 
         // Apply knockback
         Rigidbody rb = other.GetComponent<Rigidbody>();
