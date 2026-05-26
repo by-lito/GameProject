@@ -15,9 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Lobby_3D.unity
     guid: b3f3b3671eb28d943923d3328f21140e
   - enabled: 1
-    path: Assets/Scenes/Prototype_3D_Base.unity
-    guid: 2b5f0024a0cdf424fa90332d42f95ccf
-  - enabled: 1
     path: Assets/Scenes/Room_Combat_01.unity
     guid: a7d5f344ab13c4841aac41734195ff1f
   - enabled: 1

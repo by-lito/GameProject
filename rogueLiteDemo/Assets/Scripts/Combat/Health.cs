@@ -121,7 +121,7 @@ public class Health : MonoBehaviour, IDamageable
     private System.Collections.IEnumerator ReloadLobbyDelayed()
     {
         yield return new WaitForSeconds(2f);
-        SceneManager.LoadScene("Lobby");
+        SceneManager.LoadScene("Lobby_3D");
         Destroy(gameObject);
     }
 }
