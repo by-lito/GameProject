@@ -31,8 +31,6 @@ public class PlayerSpawner : MonoBehaviour
         player.name = playerPrefab.name;
 
         player.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
-    
-        player.transform.localScale = Vector3.one;
 
         Debug.Log("[PlayerSpawner] Player instanciado en " + spawnPoint.position, this);
     }
