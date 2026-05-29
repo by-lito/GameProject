@@ -51,7 +51,20 @@ public class FirebaseAuthHandler : MonoBehaviour
             CurrentUser = task.Result.User;
             Debug.Log("Usuario registrado correctamente. UID: " + CurrentUser.UserId);
             Debug.Log("Email: " + CurrentUser.Email);
+
+            if (FirebaseSaveHandler.Instance != null)
+            {
+                FirebaseSaveHandler.Instance.LoadPlayerData();
+            }
         });
+
+        // Log temporal para probar el HUD persistente
+
+        if (FirebaseSaveHandler.Instance != null)
+        {
+            Debug.Log("Cargando datos del jugador...");
+            FirebaseSaveHandler.Instance.LoadPlayerData();
+        }
     }
 
     public void LoginWithEmail(string email, string password)
@@ -79,6 +92,19 @@ public class FirebaseAuthHandler : MonoBehaviour
             CurrentUser = task.Result.User;
             Debug.Log("Usuario inició sesión correctamente. UID: " + CurrentUser.UserId);
             Debug.Log("Email: " + CurrentUser.Email);
+
+            if (FirebaseSaveHandler.Instance != null)
+            {
+                FirebaseSaveHandler.Instance.LoadPlayerData();
+            }
+
+            // Log temporal para probar el HUD persistente
+
+            if (FirebaseSaveHandler.Instance != null)
+            {
+                Debug.Log("Cargando datos del jugador...");
+                FirebaseSaveHandler.Instance.LoadPlayerData();
+            }
         });
     }
 

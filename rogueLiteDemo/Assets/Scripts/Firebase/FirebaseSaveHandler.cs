@@ -72,16 +72,39 @@ public class FirebaseSaveHandler : MonoBehaviour
         }
 
         DocumentReference docRef = db.Collection("players").Document(userId);
+
+        Debug.Log("Buscando documento de usuario: " + userId);
+
         docRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
+            Debug.Log("Entrando al callback de Firestore");
+
+            Debug.Log("Task completada: " + task.IsCompleted);
+            Debug.Log("Task faulted: " + task.IsFaulted);
+
             if (task.IsCompleted)
             {
                 DocumentSnapshot snapshot = task.Result;
+                Debug.Log("Snapshot existe: " + snapshot.Exists);
+
                 if (snapshot.Exists)
                 {
-                    PlayerSaveData data = snapshot.ConvertTo<PlayerSaveData>();
-                    UpdateHUD(data);
-                    Debug.Log("Datos cargados correctamente desde Firestore.");
+                    try
+                    {
+                        PlayerSaveData data = snapshot.ConvertTo<PlayerSaveData>();
+
+                        Debug.Log("Conversión realizada");
+                        Debug.Log("Vida: " + data.currentHealth);
+                        Debug.Log("Monedas: " + data.coins);
+                        Debug.Log("Salas: " + data.roomsCompleted);
+
+                        UpdateHUD(data);
+                        Debug.Log("Datos cargados correctamente desde Firestore.");
+                    }
+                    catch (System.Exception e)
+                    {
+                        Debug.LogError("ERROR CONVERT_TO: " + e);
+                    }
                 }
                 else
                 {
@@ -105,11 +128,13 @@ public class FirebaseSaveHandler : MonoBehaviour
 
     public void UpdateHUD(PlayerSaveData playerData)
     {
+        Debug.Log("UPDATE HUD");
+
         if (playerData != null)
         {
-            VidasText.text = "Vidas: " + playerData.currentHealth;
-            MonedasText.text = "Monedas: " + playerData.coins;
-            SalasText.text = "Salas completadas: " + playerData.roomsCompleted;
+            HUDController.Instance.SetVidas(playerData.currentHealth);
+            HUDController.Instance.SetMonedas(playerData.coins);
+            HUDController.Instance.SetSalas(playerData.roomsCompleted);
         }
     }
 }

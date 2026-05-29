@@ -25,16 +25,19 @@ public class HUDController : MonoBehaviour
     // Métodos para actualizar valores
     public void SetVidas(int v)
     {
+        Debug.Log("SET VIDAS: " + v);
         vidasText.text = "Vidas: " + v;
     }
 
     public void SetMonedas(int m)
     {
+        Debug.Log("SET MONEDAS: " + m);
         monedasText.text = "Monedas: " + m;
     }
 
     public void SetSalas(int s)
     {
+        Debug.Log("SET SALAS: " + s);
         salasText.text = "Salas: " + s;
     }
 }
