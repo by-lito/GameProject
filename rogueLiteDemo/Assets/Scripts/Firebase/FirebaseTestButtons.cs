@@ -63,7 +63,7 @@ public class FirebaseTestButtons : MonoBehaviour
                 Destroy(canvas);
             }
 
-            FindFirstObjectByType<SceneLoader>().LoadLobby();
+            FindAnyObjectByType<SceneLoader>().LoadLobby();
         }
         else
         {
