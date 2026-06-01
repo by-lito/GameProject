@@ -16,7 +16,13 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadLobby()
     {
-        LoadScene(Lobby3D);
+        // AVISAMOS AL GAMEMANAGER DE QUE EMPIEZA LA RUN
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.StartRun(); // Esto cambia el estado interno a GameState.Playing
+        }
+
+        SceneManager.LoadScene("Lobby_3D");
     }
 
     public void LoadPrototype3DBase()
