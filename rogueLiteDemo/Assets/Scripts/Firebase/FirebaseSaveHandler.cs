@@ -132,6 +132,16 @@ public class FirebaseSaveHandler : MonoBehaviour
 
         if (playerData != null)
         {
+            // ─────────────────────────────────────────────────────────────────
+            // ¡ESTE ES EL ESCUDO! Si el HUDController no existe en esta escena, 
+            // salimos de la función de forma segura sin romper el juego.
+            if (HUDController.Instance == null)
+            {
+                Debug.LogWarning("HUDController.Instance no encontrado en esta escena (es normal en MainMenu).");
+                return;
+            }
+            // ─────────────────────────────────────────────────────────────────
+
             HUDController.Instance.SetVidas(playerData.currentHealth);
             HUDController.Instance.SetMonedas(playerData.coins);
             HUDController.Instance.SetSalas(playerData.roomsCompleted);
