@@ -16,13 +16,6 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadLobby()
     {
-        GameObject canvas = GameObject.Find("Canvas");
-
-        if (canvas != null)
-        {
-            Destroy(canvas);
-        }
-
         LoadScene(Lobby3D);
     }
 
