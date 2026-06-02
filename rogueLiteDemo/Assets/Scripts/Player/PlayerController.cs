@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     public Transform shootPoint;
 
     /// <summary>
-    /// Evento que se dispara al pulsar el botón de Acción.
+    /// Evento que se dispara al pulsar el botï¿½n de Acciï¿½n.
     /// Utilizado para interacciones con el entorno y fases del Jefe.
     /// </summary>
     public System.Action OnActionPressed;
@@ -47,11 +47,11 @@ public class PlayerController : MonoBehaviour
         rb.freezeRotation = true;
         rb.linearDamping = 5f;
 
-        // [NUEVO] Busca el Animator en sus componentes hijos automáticamente
+        // [NUEVO] Busca el Animator en sus componentes hijos automï¿½ticamente
         anim = GetComponentInChildren<Animator>();
     }
 
-    // --- MÉTODOS DE ENTRADA (INPUT SYSTEM) ---
+    // --- Mï¿½TODOS DE ENTRADA (INPUT SYSTEM) ---
 
     /// <summary>
     /// Recibe la entrada de movimiento del Input System.
@@ -64,13 +64,13 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Ejecuta un ataque de área circular (Melee) frente al jugador.
+    /// Ejecuta un ataque de ï¿½rea circular (Melee) frente al jugador.
     /// </summary>
     public void OnAttack(InputValue value)
     {
         if (!value.isPressed || isParalyzed || isDashing) return;
 
-        // Activamos el trigger de ataque para reproducir la animación
+        // Activamos el trigger de ataque para reproducir la animaciï¿½n
         if (anim != null) anim.SetTrigger("isAttacking"); 
         Collider[] hitEnemies = Physics.OverlapSphere(attackPoint.position, attackRange, enemyLayers);
         foreach (Collider enemy in hitEnemies)
@@ -86,13 +86,13 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>  
-    /// Instancia un proyectil en la posición de disparo.
+    /// Instancia un proyectil en la posiciï¿½n de disparo.
     /// </summary>
     public void OnFire(InputValue value)
     {
         if (value.isPressed && !isParalyzed && !isDashing)
         {
-            // Activamos el trigger de disparo para reproducir la animación
+            // Activamos el trigger de disparo para reproducir la animaciï¿½n
             if (anim != null) anim.SetTrigger("isShooting");
 
             if (projectilePrefab != null && shootPoint != null)
@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour
                 // 1. Instanciamos el proyectil verde en el ShootPoint
                 GameObject bullet = Instantiate(projectilePrefab, shootPoint.position, Quaternion.identity);
 
-                // 2. Obtenemos la última dirección en la que miraba Aurora desde los parámetros de su Animator
+                // 2. Obtenemos la ï¿½ltima direcciï¿½n en la que miraba Aurora desde los parï¿½metros de su Animator
                 Vector2 fireDirection = new Vector2(anim.GetFloat("Horizontal"), anim.GetFloat("Vertical"));
 
                 // Si por lo que sea da 0 (ej. al empezar), disparamos hacia abajo o al frente por defecto
@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Activa la habilidad de Dash si está disponible y el jugador no está paralizado.
+    /// Activa la habilidad de Dash si estï¿½ disponible y el jugador no estï¿½ paralizado.
     /// </summary>
     public void OnDash(InputValue value)
     {
@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Invoca el evento de acción para interactuar con objetos o jefes.
+    /// Invoca el evento de acciï¿½n para interactuar con objetos o jefes.
     /// </summary>
     public void OnAction(InputValue value)
     {
@@ -136,17 +136,17 @@ public class PlayerController : MonoBehaviour
         OnActionPressed?.Invoke();
     }
 
-    // --- LÓGICA DE HABILIDADES ---
+    // --- Lï¿½GICA DE HABILIDADES ---
 
     /// <summary>
-    /// Corrutina que gestiona el desplazamiento rápido (Dash) y su tiempo de reutilización.
+    /// Corrutina que gestiona el desplazamiento rï¿½pido (Dash) y su tiempo de reutilizaciï¿½n.
     /// </summary>
     private IEnumerator ExecuteDash()
     {
         canDash = false;
         isDashing = true;
 
-        if (anim != null) anim.SetBool("isDashing", true);// [NUEVO] Activamos el parámetro isDashing en el Animator para cambiar a la animación de dash
+        if (anim != null) anim.SetBool("isDashing", true);// [NUEVO] Activamos el parï¿½metro isDashing en el Animator para cambiar a la animaciï¿½n de dash
 
         float originalDrag = rb.linearDamping;
         rb.linearDamping = 0f;
@@ -161,14 +161,14 @@ public class PlayerController : MonoBehaviour
 
         rb.linearDamping = originalDrag;
         isDashing = false;
-        if (anim != null) anim.SetBool("isDashing", false);// [NUEVO] Desactivamos el parámetro isDashing para volver a la animación normal
+        if (anim != null) anim.SetBool("isDashing", false);// [NUEVO] Desactivamos el parï¿½metro isDashing para volver a la animaciï¿½n normal
 
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
 
     /// <summary>
-    /// Cambia el estado de parálisis del jugador.
+    /// Cambia el estado de parï¿½lisis del jugador.
     /// </summary>
     /// <param name="state">True para paralizar, False para liberar.</param>
     public void SetParalyzed(bool state)
@@ -179,7 +179,7 @@ public class PlayerController : MonoBehaviour
             moveInput = Vector2.zero;
             rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
 
-            // [NUEVO] Si está paralizado, paramos la animación de golpe
+            // [NUEVO] Si estï¿½ paralizado, paramos la animaciï¿½n de golpe
             if (anim != null) anim.SetFloat("Speed", 0f);
         }
     }
@@ -199,7 +199,7 @@ public class PlayerController : MonoBehaviour
             // CASO 2: Si estamos haciendo un Dash 
             else if (isDashing)
             {
-                // Si estás pulsando alguna tecla de dirección durante el Dash, usamos esa dirección limpia
+                // Si estï¿½s pulsando alguna tecla de direcciï¿½n durante el Dash, usamos esa direcciï¿½n limpia
                 if (moveInput.sqrMagnitude > 0.01f)
                 {
                     anim.SetFloat("Horizontal", moveInput.x);
@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    // Si haces un dash estático, leemos el Rigidbody mapeando el eje Z del mundo 3D a la Y del Animator
+                    // Si haces un dash estï¿½tico, leemos el Rigidbody mapeando el eje Z del mundo 3D a la Y del Animator
                     Vector3 dashDirection = rb.linearVelocity.normalized;
                     if (dashDirection.sqrMagnitude > 0.01f)
                     {
@@ -217,7 +217,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            // Pasamos la velocidad (magnitud) al parámetro Speed para cambiar entre Idle y Walk
+            // Pasamos la velocidad (magnitud) al parï¿½metro Speed para cambiar entre Idle y Walk
             float currentSpeed = isDashing ? 1f : moveInput.magnitude;
             anim.SetFloat("Speed", currentSpeed);
         }
@@ -228,12 +228,11 @@ public class PlayerController : MonoBehaviour
         if (isDashing || isParalyzed) return;
 
         Vector3 move = new Vector3(moveInput.x, 0f, moveInput.y);
-        // Mantenemos la velocidad vertical (gravedad) mientras aplicamos velocidad en X y Z
-        rb.linearVelocity = new Vector3(move.x * moveSpeed, rb.linearVelocity.y, move.z * moveSpeed);
+        rb.linearVelocity = move * moveSpeed;
     }
 
     /// <summary>
-    /// Dibuja el rango de ataque en el Editor de Unity para facilitar el ajuste de parámetros.
+    /// Dibuja el rango de ataque en el Editor de Unity para facilitar el ajuste de parï¿½metros.
     /// </summary>
     void OnDrawGizmosSelected()
     {
