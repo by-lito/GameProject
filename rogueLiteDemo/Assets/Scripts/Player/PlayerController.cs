@@ -62,8 +62,8 @@ public class PlayerController : MonoBehaviour
         // Si venimos de Firebase, tomamos esos datos iniciales para la sesi�n de juego local
         if (FirebaseAuthHandler.Instance != null && FirebaseSaveHandler.Instance != null)
         {
-            // Nota: Si tus compa�eros guardan los datos en alguna variable est�tica de FirebaseSaveHandler, 
-            // puedes asignarlos aqu�. Si no, empezamos con valores est�ndar o los cargados por defecto:
+            // Nota: Si tus compaeros guardan los datos en alguna variable est�tica de FirebaseSaveHandler, 
+            // puedes asignarlos aqu. Si no, empezamos con valores est�ndar o los cargados por defecto:
             ActualizarHUDLocal();
         }
         else
@@ -284,7 +284,7 @@ public class PlayerController : MonoBehaviour
         ActualizarHUDLocal();
     }
 
-    public void A�adirMonedas(int cantidad)
+    public void AnadirMonedas(int cantidad)
     {
         coins += cantidad;
         ActualizarHUDLocal();
