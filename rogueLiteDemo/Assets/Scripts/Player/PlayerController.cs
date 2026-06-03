@@ -15,6 +15,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private bool isParalyzed = false;
 
+    // Eugenia
+    [Header("Variables de Estado de Partida (Local)")]
+    public float currentHealth = 100f;
+    public int coins = 0;
+    public int roomsCompleted = 0;
+
     // [NUEVO] Referencia al componente Animator del sprite Player_Walk_012 hijo
     private Animator anim;
 
@@ -49,6 +55,21 @@ public class PlayerController : MonoBehaviour
 
         // [NUEVO] Busca el Animator en sus componentes hijos autom�ticamente
         anim = GetComponentInChildren<Animator>();
+    }
+
+    void Start()
+    {
+        // Si venimos de Firebase, tomamos esos datos iniciales para la sesi�n de juego local
+        if (FirebaseAuthHandler.Instance != null && FirebaseSaveHandler.Instance != null)
+        {
+            // Nota: Si tus compaeros guardan los datos en alguna variable est�tica de FirebaseSaveHandler, 
+            // puedes asignarlos aqu. Si no, empezamos con valores est�ndar o los cargados por defecto:
+            ActualizarHUDLocal();
+        }
+        else
+        {
+            ActualizarHUDLocal();
+        }
     }
 
     // --- M�TODOS DE ENTRADA (INPUT SYSTEM) ---
@@ -239,5 +260,39 @@ public class PlayerController : MonoBehaviour
         if (attackPoint == null) return;
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
+    /// <summary>
+    /// Actualiza los elementos del HUD en tiempo real usando los datos locales de esta sesi�n,
+    /// sin realizar peticiones costosas a internet.--> Eugenia
+    /// </summary>
+    public void ActualizarHUDLocal()
+    {
+        if (HUDController.Instance != null)
+        {
+            HUDController.Instance.SetVidas(currentHealth);
+            HUDController.Instance.SetMonedas(coins);
+            HUDController.Instance.SetSalas(roomsCompleted);
+        }
+    }
+
+    // M�todos de utilidad para cuando el jugador interact�e en la escena
+    public void ModificarVida(float cantidad)
+    {
+        currentHealth += cantidad;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, 100f); // Restringe la vida entre 0 y 100
+        ActualizarHUDLocal();
+    }
+
+    public void AnadirMonedas(int cantidad)
+    {
+        coins += cantidad;
+        ActualizarHUDLocal();
+    }
+
+    public void AvanzarSala()
+    {
+        roomsCompleted++;
+        ActualizarHUDLocal();
     }
 }
