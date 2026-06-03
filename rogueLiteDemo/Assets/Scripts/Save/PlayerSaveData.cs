@@ -1,27 +1,31 @@
-using System;
 using System.Collections.Generic;
+using Firebase.Firestore;
 
-[Serializable]
+[FirestoreData]
+[System.Serializable]
 public class PlayerSaveData
 {
-    public int currentHealth;
-    public int maxHealth;
-    public int coins;
-    public int permanentMoney;
-    public int roomsCompleted;
-    public int enemiesDefeated;
-    public int deaths;
-    public List<string> inventory;
+    [FirestoreProperty]
+    public int currentHealth { get; set; }
 
-    public PlayerSaveData()
-    {
-        currentHealth = 0;
-        maxHealth = 100;
-        coins = 0;
-        permanentMoney = 0;
-        roomsCompleted = 0;
-        enemiesDefeated = 0;
-        deaths = 0;
-        inventory = new List<string>();
-    }
+    [FirestoreProperty]
+    public int maxHealth { get; set; }
+
+    [FirestoreProperty]
+    public int coins { get; set; }
+
+    [FirestoreProperty]
+    public int permanentMoney { get; set; }
+
+    [FirestoreProperty]
+    public int roomsCompleted { get; set; }
+
+    [FirestoreProperty]
+    public int enemiesDefeated { get; set; }
+
+    [FirestoreProperty]
+    public int deaths { get; set; }
+
+    [FirestoreProperty]
+    public List<string> inventory { get; set; }
 }

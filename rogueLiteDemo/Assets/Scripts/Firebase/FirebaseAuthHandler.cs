@@ -1,6 +1,8 @@
 using UnityEngine;
 using Firebase.Auth;
 using Firebase.Extensions;
+using Firebase.Firestore;
+using System.Collections.Generic;
 
 public class FirebaseAuthHandler : MonoBehaviour
 {
@@ -8,6 +10,9 @@ public class FirebaseAuthHandler : MonoBehaviour
 
     private FirebaseAuth auth;
     public FirebaseUser CurrentUser { get; private set; }
+
+    [Header("UI Control")]
+    [SerializeField] private GameObject playButtonGO;
 
     private void Awake()
     {
@@ -49,8 +54,59 @@ public class FirebaseAuthHandler : MonoBehaviour
             }
 
             CurrentUser = task.Result.User;
-            Debug.Log("Usuario registrado correctamente. UID: " + CurrentUser.UserId);
-            Debug.Log("Email: " + CurrentUser.Email);
+            Debug.Log("Usuario registrado correctamente en Auth. UID: " + CurrentUser.UserId);
+
+            // ¡AQUÍ ESTÁ EL CAMBIO CRUCIAL! 
+            // En vez de cargar datos que no existen, creamos su nuevo documento en Firestore
+            CreateNewPlayerData(CurrentUser.UserId);
+        });
+    }
+
+    private void CreateNewPlayerData(string userId)
+    {
+        // Accedemos a Firestore directamente
+        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
+        DocumentReference docRef = db.Collection("players").Document(userId);
+
+        // Estructura de datos idéntica a la que tienes en tu consola de Firebase
+        Dictionary<string, object> defaultData = new Dictionary<string, object>
+        {
+            { "coins", 0 },
+            { "currentHealth", 0 },
+            { "deaths", 0 },
+            { "enemiesDefeated", 0 },
+            { "inventory", new List<string>() }, // Lista vacía para la EspadaBase, etc.
+            { "maxHealth", 100 },
+            { "permanentMoney", 0 },
+            { "roomsCompleted", 0 }
+        };
+
+        Debug.Log("Creando documento en Firestore para el nuevo usuario...");
+
+        docRef.SetAsync(defaultData).ContinueWithOnMainThread(firestoreTask =>
+        {
+            if (firestoreTask.IsFaulted || firestoreTask.IsCanceled)
+            {
+                Debug.LogError("Error al crear el documento en Firestore: " + firestoreTask.Exception);
+                return;
+            }
+
+            Debug.Log("¡Documento de Firestore creado con éxito!");
+
+            // ─────────────────────────────────────────────────────────
+            // (Al registrarse con éxito, activamos el PLAY)
+            if (playButtonGO != null)
+            {
+                playButtonGO.SetActive(true);
+            }
+            // ─────────────────────────────────────────────────────────
+
+            // Ahora que el documento YA existe físicamente en la nube, 
+            // llamamos a vuestro SaveHandler para que lo lea y actualice el HUD
+            if (FirebaseSaveHandler.Instance != null)
+            {
+                FirebaseSaveHandler.Instance.LoadPlayerData();
+            }
         });
     }
 
@@ -64,13 +120,7 @@ public class FirebaseAuthHandler : MonoBehaviour
 
         auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
         {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("Inicio de sesión cancelado.");
-                return;
-            }
-
-            if (task.IsFaulted)
+            if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.LogError("Error al iniciar sesión: " + task.Exception);
                 return;
@@ -79,6 +129,19 @@ public class FirebaseAuthHandler : MonoBehaviour
             CurrentUser = task.Result.User;
             Debug.Log("Usuario inició sesión correctamente. UID: " + CurrentUser.UserId);
             Debug.Log("Email: " + CurrentUser.Email);
+
+            // ─────────────────────────────────────────────────────────
+            // ¡AQUÍ TAMBIÉN VA! (Al loguearse bien, activamos el PLAY)
+            if (playButtonGO != null)
+            {
+                playButtonGO.SetActive(true);
+            }
+            // ─────────────────────────────────────────────────────────
+
+            if (FirebaseSaveHandler.Instance != null)
+            {
+                FirebaseSaveHandler.Instance.LoadPlayerData();
+            }
         });
     }
 

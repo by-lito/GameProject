@@ -50,4 +50,25 @@ public class FirebaseTestButtons : MonoBehaviour
     {
         FirebaseSaveHandler.Instance.LoadPlayerData();
     }
+
+    public void PlayIfLoggedIn()
+    {
+        if (FirebaseAuthHandler.Instance != null &&
+            FirebaseAuthHandler.Instance.CurrentUser != null)
+        {
+            GameObject canvas = GameObject.Find("Canvas");
+
+            if (canvas != null)
+            {
+                Destroy(canvas);
+            }
+
+            FindAnyObjectByType<SceneLoader>().LoadLobby();
+        }
+        else
+        {
+            Debug.LogWarning("Debes iniciar sesión antes de jugar.");
+        }
+    }
+
 }

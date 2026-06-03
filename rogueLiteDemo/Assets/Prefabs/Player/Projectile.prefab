@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5210864611107075152}
   - component: {fileID: 6985921028096911701}
   - component: {fileID: -5861217228776532728}
-  - component: {fileID: -7078822374889799395}
   - component: {fileID: 2672210025646905288}
+  - component: {fileID: 153080352658570026}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -140,26 +140,11 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-7078822374889799395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5392925949608424734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1be115945b0d0784dac6908b7f231b14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Projectile
-  speed: 15
-  damage: 10
-  lifeTime: 5
 --- !u!95 &2672210025646905288
 Animator:
   serializedVersion: 7
@@ -182,3 +167,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &153080352658570026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5392925949608424734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca2a7bc13f15b134084305e454e74665, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Projectile
+  speed: 20
+  damage: 10
+  lifeTime: 5
