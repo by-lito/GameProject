@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 117318906424820863}
   - component: {fileID: -1025293151153744857}
   - component: {fileID: -2404230464092902083}
+  - component: {fileID: 5846059598407013713}
   m_Layer: 0
   m_Name: HealerProjectile
   m_TagString: Enemy
@@ -158,3 +159,15 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5846059598407013713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5831635697272505365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 105c54b3dcc9e8847972cb21a07aedc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Billboard
