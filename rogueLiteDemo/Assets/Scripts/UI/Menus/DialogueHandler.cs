@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// Minimal dialogue system. Displays lines one by one.
@@ -12,7 +12,7 @@ public class DialogueHandler : MonoBehaviour
 {
     [Header("UI")]
     public GameObject dialoguePanel;
-    public Text dialogueText;              // Swap for TMP_Text if using TextMeshPro
+    public TMP_Text dialogueText;  
 
     [Header("Display")]
     public float delayBetweenChars = 0.03f;

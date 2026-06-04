@@ -319,6 +319,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   moveSpeed: 8
+  currentHealth: 100
+  coins: 0
+  roomsCompleted: 0
   attackPoint: {fileID: 7553042319638632154}
   attackRange: 1
   meleeDamage: 10
