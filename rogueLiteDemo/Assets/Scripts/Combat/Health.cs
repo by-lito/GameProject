@@ -39,8 +39,8 @@ public class Health : MonoBehaviour, IDamageable
             PlayerController pc = GetComponent<PlayerController>();
             if (pc != null)
             {
-                pc.currentHealth = currentHP;
-                pc.ActualizarHUDLocal();
+                pc.ModificarVida(amount);
+                currentHP = pc.currentHealth;
             }
 
             Animator anim = GetComponentInChildren<Animator>();
@@ -70,8 +70,8 @@ public class Health : MonoBehaviour, IDamageable
             PlayerController pc = GetComponent<PlayerController>();
             if (pc != null)
             {
-                pc.currentHealth = currentHP;
-                pc.ActualizarHUDLocal();
+                pc.ModificarVida(-amount);
+                currentHP = pc.currentHealth;
             }
         }
         else
