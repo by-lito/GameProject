@@ -12,10 +12,7 @@ public class Projectile : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.useGravity = false; // Forzamos que no caiga
-        }
+        if (rb != null) rb.useGravity = false;
     }
 
     void Start()
@@ -24,47 +21,39 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject, lifeTime);
     }
 
-    /// <summary>
-    /// [NUEVO] Recibe la dirección en la que está mirando Aurora y le aplica velocidad física real.
-    /// </summary>
     public void SetupDirection(Vector2 direction)
     {
         if (rb == null) rb = GetComponent<Rigidbody>();
-
         if (rb != null)
         {
-            // Convertimos la dirección 2D del Animator (X, Y) al movimiento 3D de tu mapa (X, 0, Z)
             Vector3 velocityDirection = new Vector3(direction.x, 0f, direction.y).normalized;
-
             rb.linearVelocity = velocityDirection * speed;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // 1. Ignorar al jugador siempre
+        // Nunca chocar con el propio jugador.
         if (other.CompareTag("Player")) return;
 
-        // 2. Si es un enemigo, daño y muerte inmediata
+        // Enemigo: daño y destrucción.
         if (other.CompareTag("Enemy"))
         {
             if (other.TryGetComponent<Health>(out Health health))
-            {
                 health.TakeDamage(damage);
-            }
             Destroy(gameObject);
+            return;
         }
 
-        // 3. SI CHOCA CON EL SUELO O PAREDES
-        if (other.CompareTag("Environment") || other.CompareTag("Walls"))
+        if (other.CompareTag("Walls"))
         {
-            // ESCUDO: Si ha pasado menos de 0.2 segundos, IGNORAMOS el suelo
-            if (Time.time < spawnTime + 0.2f)
-            {
-                return;
-            }
+            Destroy(gameObject);
+            return;
+        }
 
-            // Si ya está lejos, entonces sí se destruye
+        if (other.CompareTag("Environment"))
+        {
+            if (Time.time < spawnTime + 0.2f) return;
             Destroy(gameObject);
         }
     }
