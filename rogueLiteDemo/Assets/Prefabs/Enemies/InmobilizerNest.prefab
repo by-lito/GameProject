@@ -119,7 +119,7 @@ MonoBehaviour:
   detectionRange: 8
   attackRange: 2
   angelDustValue: 0
-  inmobilizerPrefab: {fileID: 0}
+  inmobilizerPrefab: {fileID: 3992916484310929017, guid: 334ce5ca4dd77ca468348b0bc505769c, type: 3}
   spawnInterval: 6
   maxActiveInmobilizers: 4
   spawnRadius: 1.5

@@ -192,7 +192,7 @@ MonoBehaviour:
   attackRange: 2
   angelDustValue: 15
   projectilePrefab: {fileID: 5831635697272505365, guid: fa51bfd978b0ce44a8cba94dbea91441, type: 3}
-  shootPoint: {fileID: 0}
+  shootPoint: {fileID: 6358271130540717741}
   attackCooldown: 1
   knockbackForce: 8
   relocateRadius: 4
@@ -207,7 +207,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6358271130540717741}
   m_Layer: 0
-  m_Name: "SpawnProjecti\xF1e"
+  m_Name: SpawnProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

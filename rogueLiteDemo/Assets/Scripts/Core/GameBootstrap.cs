@@ -2,9 +2,8 @@
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Entry point of the application. Lives in the Boot scene (index 0).
-/// Initializes core systems in the correct order, then loads the Main Menu.
-/// Add this to a single GameObject in the Boot scene.
+/// Punto de entrada de la aplicación. Vive en la escena Boot (índice 0).
+/// Inicializa los sistemas core en orden y luego carga el menú principal.
 /// </summary>
 public class GameBootstrap : MonoBehaviour
 {
@@ -24,21 +23,17 @@ public class GameBootstrap : MonoBehaviour
         LoadFirstScene();
     }
 
-    // ── Initialization ───────────────────────────────────────────────
+    // ── Inicialización ───────────────────────────────────────────────
 
     private void InitializeSystems()
     {
         EnsureGameManager();
-
-        // Add additional system initialization here as the project grows
-        // e.g.: EnsureAudioManager(), EnsureInputManager(), etc.
-
+        EnsureWallet();
         Debug.Log("[Bootstrap] Core systems initialized.");
     }
 
     private void EnsureGameManager()
     {
-        // If GameManager already exists (e.g. hot reload), skip
         if (GameManager.Instance != null) return;
 
         if (gameManagerPrefab != null)
@@ -47,14 +42,26 @@ public class GameBootstrap : MonoBehaviour
         }
         else
         {
-            // Create a minimal GameManager at runtime if no prefab assigned
             GameObject go = new GameObject("GameManager");
             go.AddComponent<GameManager>();
             Debug.LogWarning("[Bootstrap] GameManager prefab not assigned — created at runtime.");
         }
     }
 
-    // ── Scene loading ────────────────────────────────────────────────
+    // Crea UNA billetera persistente para toda la sesión.
+    // El Angel Dust y el dinero permanente sobreviven a los cambios de escena.
+    // IMPORTANTE: no coloques PlayerWallet en ninguna escena; de esto se encarga el Boot.
+    private void EnsureWallet()
+    {
+        if (PlayerWallet.instance != null) return;
+
+        GameObject go = new GameObject("PlayerWallet");
+        go.AddComponent<PlayerWallet>();
+        DontDestroyOnLoad(go);
+        Debug.Log("[Bootstrap] PlayerWallet persistente creada.");
+    }
+
+    // ── Carga de escena ──────────────────────────────────────────────
 
     private void LoadFirstScene()
     {
