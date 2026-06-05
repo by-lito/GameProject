@@ -1,6 +1,6 @@
-# 🎮 RogueLiteDemo - Manual de Usuario y Guía de Ejecución
+# 🎮 Recuerda - Manual de Usuario y Guía de Ejecución
 
-¡Bienvenido al repositorio oficial de **RogueLiteDemo**! Este proyecto es un juego desarrollado en **Unity 6 (6000.4.2f1)** que integra bases de datos en tiempo real y sistemas de autenticación mediante **Firebase (Auth y Firestore)**.
+¡Bienvenido al repositorio oficial del videojuego **Recuerda**! Este proyecto es un juego desarrollado en **Unity 6 (6000.4.2f1)** que integra bases de datos en tiempo real y sistemas de autenticación mediante **Firebase (Auth y Firestore)**.
 
 ---
 
