@@ -292,7 +292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHP: 100
   currentHP: 100
-  dustReward: 0
+  manageOwnDestruction: 0
 --- !u!114 &1691072060447764012
 MonoBehaviour:
   m_ObjectHideFlags: 0
