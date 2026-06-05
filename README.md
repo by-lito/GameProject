@@ -44,7 +44,7 @@ El juego cuenta con soporte híbrido completo. Puedes jugar utilizando el combo 
 
 Al arrancar el juego, se presentará la interfaz de acceso para gestionar el progreso de tu personaje en la nube:
 
-* **Registro:** Introduce un correo electrónico válido y una contraseña de 6 caracteres mínimo para crear una nueva partida en Firestore con los parámetros iniciales (100 de salud, 0 monedas).
+* **Registro:** Introduce un correo electrónico válido y una contraseña de 6 caracteres mínimo para crear una nueva partida en Firestore con los parámetros iniciales (0 de salud, 0 monedas).
 * **Inicio de Sesión:** Si ya dispones de una cuenta activa, introduce tus credenciales y pulsa **INICIAR SESIÓN** para recuperar de forma automática tu progreso.
 
 ---
