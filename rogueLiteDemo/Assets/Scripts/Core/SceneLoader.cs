@@ -9,6 +9,11 @@ public class SceneLoader : MonoBehaviour
     public const string RoomCombat01 = "Room_Combat_01";
     public const string RoomShop01 = "Room_Shop_01";
 
+
+    public void LoadBootScene()
+    {
+        SceneManager.LoadScene("YourBootSceneNameHere");
+    }
     public void LoadMainMenu()
     {
         LoadScene(MainMenu);
