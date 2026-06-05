@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 3992916484310929017}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.000000059604645, z: 0}
+  m_LocalPosition: {x: 0, y: 0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -116,7 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InmobilizerNest
   moveSpeed: 3
   damage: 10
-  detectionRange: 8
+  detectionRange: 50
   attackRange: 2
   angelDustValue: 0
   inmobilizerPrefab: {fileID: 3992916484310929017, guid: 334ce5ca4dd77ca468348b0bc505769c, type: 3}

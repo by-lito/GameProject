@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -1025293151153744857}
   - component: {fileID: -2404230464092902083}
   - component: {fileID: 5846059598407013713}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: HealerProjectile
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 5831635697272505365}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.85405, y: 2.5538, z: 2.93587}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
