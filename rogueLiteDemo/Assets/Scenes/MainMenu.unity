@@ -555,6 +555,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FirebaseTestButtons
   emailInput: {fileID: 479538137}
   passwordInput: {fileID: 1648900814}
+  playButtonDeEstaEscena: {fileID: 1556465740}
 --- !u!1 &308889615
 GameObject:
   m_ObjectHideFlags: 0
@@ -2582,6 +2583,51 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1338290072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1338290074}
+  - component: {fileID: 1338290073}
+  m_Layer: 0
+  m_Name: FirebaseAuthHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1338290073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338290072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 250d312d37e00f940a7de5fd63e2fc06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirebaseAuthHandler
+  playButtonGO: {fileID: 0}
+--- !u!4 &1338290074
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1338290072}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 470.25, y: 218, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1486979022
 GameObject:
   m_ObjectHideFlags: 0
@@ -3727,6 +3773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FirebaseTestButtons
   emailInput: {fileID: 479538137}
   passwordInput: {fileID: 1648900814}
+  playButtonDeEstaEscena: {fileID: 1556465740}
 --- !u!4 &2030526731
 Transform:
   m_ObjectHideFlags: 0
@@ -4089,3 +4136,4 @@ SceneRoots:
   - {fileID: 183538633}
   - {fileID: 2030526731}
   - {fileID: 6657703468522675008}
+  - {fileID: 1338290074}

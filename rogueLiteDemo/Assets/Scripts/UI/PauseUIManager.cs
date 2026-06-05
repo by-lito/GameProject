@@ -89,6 +89,14 @@ public class PauseUIManager : MonoBehaviour
         }
 
         Time.timeScale = 1f; // IMPORTANTE: Descongelamos el tiempo antes de cambiar de escena
+        
+        // CIERRE DE SESIÓN SEGURO
+        if (Firebase.Auth.FirebaseAuth.DefaultInstance != null)
+        {
+            Firebase.Auth.FirebaseAuth.DefaultInstance.SignOut();
+            Debug.Log("Sesión de Firebase cerrada correctamente al salir al menú.");
+        }
+
         SceneManager.LoadScene("MainMenu");
     }
 }

@@ -8,6 +8,9 @@ public class FirebaseTestButtons : MonoBehaviour
     [SerializeField] private TMP_InputField emailInput;
     [SerializeField] private TMP_InputField passwordInput;
 
+    // Referencia directa al botón de Play del menú
+    [SerializeField] private GameObject playButtonDeEstaEscena;
+
     public void RegisterTest()
     {
         string email = emailInput.text;
@@ -21,7 +24,17 @@ public class FirebaseTestButtons : MonoBehaviour
         string email = emailInput.text;
         string password = passwordInput.text;
 
-        FirebaseAuthHandler.Instance.LoginWithEmail(email, password);
+        // Llamamos al login de Firebase que ya funciona perfectamente
+        if (FirebaseAuthHandler.Instance != null)
+        {
+            FirebaseAuthHandler.Instance.LoginWithEmail(email, password);
+
+            // Activamos el botón de PLAY inmediatamente en la escena al pulsar el login correcto
+            if (playButtonDeEstaEscena != null)
+            {
+                playButtonDeEstaEscena.SetActive(true);
+            }
+        }
     }
 
     public void LogoutTest()

@@ -112,6 +112,13 @@ public class FirebaseAuthHandler : MonoBehaviour
 
     public void LoginWithEmail(string email, string password)
     {
+        if (auth.CurrentUser != null)
+        {
+            Debug.LogWarning($"Cerrando sesión persistente anterior de: {auth.CurrentUser.Email}");
+            auth.SignOut();
+            CurrentUser = null; // Limpiamos la variable local también
+        }
+
         if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
         {
             Debug.LogError("El email y la contraseña no pueden estar vacíos.");
@@ -129,14 +136,6 @@ public class FirebaseAuthHandler : MonoBehaviour
             CurrentUser = task.Result.User;
             Debug.Log("Usuario inició sesión correctamente. UID: " + CurrentUser.UserId);
             Debug.Log("Email: " + CurrentUser.Email);
-
-            // ─────────────────────────────────────────────────────────
-            // ¡AQUÍ TAMBIÉN VA! (Al loguearse bien, activamos el PLAY)
-            if (playButtonGO != null)
-            {
-                playButtonGO.SetActive(true);
-            }
-            // ─────────────────────────────────────────────────────────
 
             if (FirebaseSaveHandler.Instance != null)
             {
@@ -162,4 +161,5 @@ public class FirebaseAuthHandler : MonoBehaviour
 
         return CurrentUser.UserId;
     }
+
 }
