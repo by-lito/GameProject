@@ -71,23 +71,19 @@ public class EnemyHealer : EnemyBase
 
     private void FireProjectile()
     {
-        if (projectilePrefab == null || shootPoint == null)
-        {
-            Debug.LogWarning("EnemyHealer: projectilePrefab or shootPoint not assigned.");
-            return;
-        }
+        if (projectilePrefab == null || shootPoint == null) return;
 
         Vector3 direction = (player.position - shootPoint.position).normalized;
-        Quaternion rotation = Quaternion.LookRotation(direction);
 
-        GameObject proj = Instantiate(projectilePrefab, shootPoint.position, rotation);
+        // Use Quaternion.identity so the Sprite doesn't rotate out of view
+        GameObject proj = Instantiate(projectilePrefab, shootPoint.position, Quaternion.identity);
 
-        // Pass knockback data to projectile if it supports it
         HealerProjectile hp = proj.GetComponent<HealerProjectile>();
         if (hp != null)
         {
+            hp.SetDirection(direction); // <--- Pass the direction here
             hp.knockbackForce = knockbackForce;
-            hp.healAmount = damage; // damage field repurposed as heal amount
+            hp.healAmount = damage;
         }
     }
 

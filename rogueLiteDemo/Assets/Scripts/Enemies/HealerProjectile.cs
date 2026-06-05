@@ -1,9 +1,5 @@
 ﻿using UnityEngine;
 
-/// <summary>
-/// Projectile fired by EnemyHealer.
-/// Heals the player on hit (inverted health mechanic) and applies knockback.
-/// </summary>
 public class HealerProjectile : MonoBehaviour
 {
     public float speed = 10f;
@@ -11,35 +7,51 @@ public class HealerProjectile : MonoBehaviour
     public float knockbackForce = 8f;
     public float lifeTime = 4f;
 
+    private Vector3 moveDirection;
+    private Rigidbody rb;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    public void SetDirection(Vector3 dir)
+    {
+        dir.y = 0f;
+        moveDirection = dir.normalized;
+    }
+
     void Start()
     {
         Destroy(gameObject, lifeTime);
     }
 
-    void Update()
+    // FIX 1: Move Kinematic rigidbodies via FixedUpdate + MovePosition 
+    // This allows the physics engine to calculate sweeps and register triggers!
+    void FixedUpdate()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        Vector3 nextPosition = transform.position + (moveDirection * speed * Time.fixedDeltaTime);
+        rb.MovePosition(nextPosition);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
+        // FIX 2: Check both the hit collider and its root parent for the "Player" tag
+        if (!other.CompareTag("Player") && !other.transform.root.CompareTag("Player")) return;
 
-        // Llamamos a TakeDamage. En el Health invertido, para el Player
-        // esto significa SUMAR vida a la barra de purificación y activar "isHit" y se vea la aniamción de daño.
-        Health playerHealth = other.GetComponent<Health>();
+        // FIX 3: Look for Health in parents in case it hits a child hitbox collider
+        Health playerHealth = other.GetComponentInParent<Health>();
         if (playerHealth != null)
         {
             playerHealth.TakeDamage(healAmount);
         }
 
-        // Apply knockback
-        Rigidbody rb = other.GetComponent<Rigidbody>();
-        if (rb != null)
+        Rigidbody playerRb = other.GetComponentInParent<Rigidbody>();
+        if (playerRb != null)
         {
             Vector3 knockbackDir = (other.transform.position - transform.position).normalized;
             knockbackDir.y = 0f;
-            rb.AddForce(knockbackDir * knockbackForce, ForceMode.Impulse);
+            playerRb.AddForce(knockbackDir * knockbackForce, ForceMode.Impulse);
         }
 
         Destroy(gameObject);
