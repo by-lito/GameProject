@@ -17,6 +17,7 @@ El juego cuenta con soporte híbrido completo. Puedes jugar utilizando el combo 
 
 ### ⌨️ Configuración: Teclado y Ratón
 * **Movimiento del personaje:** Teclas `W`, `A`, `S`, `D` (o las Flechas de dirección).
+* **Avanzar diálogo e interacciones:** Teclas `E`.
 * **Cámara / Mirada:** Mover el `Ratón`.
 * **Ataque Principal / Interactuar:** Clic Izquierdo del `Ratón`.
 * **Esquivar / Dash:** Barra `Espaciadora`.
