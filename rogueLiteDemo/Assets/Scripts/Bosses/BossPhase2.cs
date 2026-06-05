@@ -13,8 +13,6 @@ public class BossPhase2 : MonoBehaviour
     public float dialogueTriggerDelay = 2.5f;
     public float dialogueTriggerRange = 6f;
 
-    // FIX: Public field so it can be assigned directly in Inspector.
-    // GetComponentInChildren was failing silently → null crash every frame.
     [Header("Dialogue Handler")]
     public DialogueHandler dialogueHandler;
 
@@ -38,11 +36,11 @@ public class BossPhase2 : MonoBehaviour
     void Awake()
     {
         startPos = transform.position;
-        // dialogueHandler is now assigned via Inspector — no GetComponentInChildren
     }
 
     void Start()
     {
+        // Connect to the player
         GameObject p = GameObject.FindGameObjectWithTag("Player");
         if (p != null)
         {
@@ -50,10 +48,23 @@ public class BossPhase2 : MonoBehaviour
             if (playerController != null)
                 playerController.OnActionPressed += TryHug;
         }
+
+        // ─── THE SAFEST AUTO-CONNECT ───
+        // This modern Unity method guarantees it only searches the active scene, never project folders!
+        if (dialogueHandler == null)
+        {
+            dialogueHandler = Object.FindFirstObjectByType<DialogueHandler>(FindObjectsInactive.Include);
+        }
+
+        if (dialogueHandler == null)
+        {
+            Debug.LogError("[BossPhase2] CRITICAL: Could not find a DialogueHandler in the active scene!");
+        }
         else
         {
-            Debug.LogError("[BossPhase2] Player not found in Start(). Check tag.");
+            Debug.Log($"[BossPhase2] FOUND REAL SCENE UI: {dialogueHandler.gameObject.name}");
         }
+        // ───────────────────────────────
 
         if (hugPromptUI != null) hugPromptUI.SetActive(false);
     }
@@ -62,7 +73,7 @@ public class BossPhase2 : MonoBehaviour
     {
         if (hugDone) return;
 
-        // Retry player if missed on Start (handles late spawning edge case)
+        // Retry player if missed on Start
         if (playerController == null)
         {
             GameObject p = GameObject.FindGameObjectWithTag("Player");
@@ -89,41 +100,38 @@ public class BossPhase2 : MonoBehaviour
     {
         float dist = Vector3.Distance(transform.position, playerController.transform.position);
 
-        // FIX: Set dialoguePlayed = true BEFORE starting coroutine.
-        // Previously set inside coroutine → multiple coroutines started each frame
-        // before the flag was set → duplicate/stuttering dialogue.
         if (!dialoguePlayed && dist <= dialogueTriggerRange)
         {
             dialoguePlayed = true;
             StartCoroutine(TriggerDialogueDelayed());
         }
 
-        // FIX: Null-check dialogueHandler before accessing .IsRunning.
-        // If dialogueHandler was null, this line crashed every frame and stopped
-        // Update() from running → dialogue never triggered, hug never worked.
         bool dialogueRunning = dialogueHandler != null && dialogueHandler.IsRunning;
-        if (hugPromptUI != null && !dialogueRunning)
+
+        // Safety check: Only show the "E" prompt if dialogue has finished playing entirely
+        if (hugPromptUI != null && dialoguePlayed && !dialogueRunning)
+        {
             hugPromptUI.SetActive(dist <= hugRange);
+        }
     }
 
-    private IEnumerator TriggerDialogueDelayed()
+    IEnumerator TriggerDialogueDelayed()
     {
         yield return new WaitForSeconds(dialogueTriggerDelay);
 
         if (dialogueHandler != null)
         {
-            playerController.OnActionPressed += dialogueHandler.AdvanceDialogue;
-
-            dialogueHandler.OnDialogueComplete += () =>
+            // Instead of SetActive, we manipulate the visual state
+            CanvasGroup cg = dialogueHandler.GetComponent<CanvasGroup>();
+            if (cg != null)
             {
-                playerController.OnActionPressed -= dialogueHandler.AdvanceDialogue;
-            };
+                cg.alpha = 1;            // Make it visible
+                cg.interactable = true;  // Make it clickable/active
+                cg.blocksRaycasts = true;
+            }
 
+            // Now the object is ALWAYS active, so this CANNOT crash
             dialogueHandler.StartDialogue(dialogueLines, playerController);
-        }
-        else
-        {
-            Debug.LogWarning("[BossPhase2] DialogueHandler not assigned in Inspector.");
         }
     }
 
@@ -158,8 +166,10 @@ public class BossPhase2 : MonoBehaviour
 
         if (potionFragmentPrefab != null)
             Instantiate(potionFragmentPrefab, transform.position + spawnOffset, Quaternion.identity);
-        else
-            Debug.LogWarning("[BossPhase2] potionFragmentPrefab not assigned.");
+
+        // --- FINAL STEP: LOAD YOUR BOOT SCENE ---
+        // Ensure your "Boot" scene is added in Build Settings
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Boot");
 
         Destroy(gameObject);
     }

@@ -132,7 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 200
   currentHP: 200
-  dustReward: 200
+  manageOwnDestruction: 1
 --- !u!114 &-2433659444274872591
 MonoBehaviour:
   m_ObjectHideFlags: 0

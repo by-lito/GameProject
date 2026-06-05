@@ -14,15 +14,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private Vector2 moveInput;
     private bool isParalyzed = false;
+    private Animator anim;
 
     // Eugenia
     [Header("Variables de Estado de Partida (Local)")]
     public float currentHealth = 100f;
     public int coins = 0;
     public int roomsCompleted = 0;
-
-    // [NUEVO] Referencia al componente Animator del sprite Player_Walk_012 hijo
-    private Animator anim;
 
     [Header("Ajustes de Combate")]
     public Transform attackPoint;
@@ -52,9 +50,19 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         rb.linearDamping = 5f;
-
-        // [NUEVO] Busca el Animator en sus componentes hijos autom�ticamente
         anim = GetComponentInChildren<Animator>();
+    }
+
+    // --- INPUT SYSTEM TRIGGER ---
+    public void OnAction(InputValue value)
+    {
+        // 1. Check if the button was actually pressed
+        if (value.isPressed)
+        {
+            // 2. Trigger your internal C# event so the DialogueHandler hears it
+            OnActionPressed?.Invoke();
+            Debug.Log("Action detected and event invoked!");
+        }
     }
 
     void Start()
@@ -145,14 +153,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Invoca el evento de acci�n para interactuar con objetos o jefes.
-    /// </summary>
-    public void OnAction(InputValue value)
-    {
-        if (!value.isPressed) return;
-        OnActionPressed?.Invoke();
-    }
 
     // --- L�GICA DE HABILIDADES ---
 
