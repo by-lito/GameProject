@@ -10,23 +10,35 @@ EditorBuildSettings:
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
-    guid: 819ac2760a1be2f4c96f616945d503bf
+    guid: e11ee563609a83d429ca220db41a9d72
   - enabled: 1
     path: Assets/Scenes/Lobby_3D.unity
     guid: b3f3b3671eb28d943923d3328f21140e
   - enabled: 1
-    path: Assets/Scenes/Room_Combat_02.unity
-    guid: e6eefd4f4cf48534492534063d81e71e
+    path: Assets/Scenes/Room_Combat/Room_Combat_02.unity
+    guid: e79fe9c8781682e4ea90885978ba20a7
+  - enabled: 1
+    path: Assets/Scenes/Room_Combat/Room_Combat_03.unity
+    guid: 735ae98e18c29da46b863030401e26be
+  - enabled: 1
+    path: Assets/Scenes/Room_Combat/Room_Combat_04.unity
+    guid: 4e916513f963eae4680c14fb296224a7
+  - enabled: 1
+    path: Assets/Scenes/Room_Combat/Room_Combat_05.unity
+    guid: 0371e0d002329444aad43d23e078b5de
+  - enabled: 1
+    path: Assets/Scenes/Room_Combat/Room_Combat_06.unity
+    guid: ca1f22c0a469886479ebfa8e2e9ba13d
   - enabled: 1
     path: Assets/Scenes/Room_Shop_01.unity
     guid: 16ec53787635d3c49998ea019d13a21b
   - enabled: 1
-    path: Assets/Scenes/Room_Combat_01.unity
-    guid: a7d5f344ab13c4841aac41734195ff1f
+    path: Assets/Scenes/Room_Combat/Room_Combat_01.unity
+    guid: 4434b2ddf87f07244ab44f2ac5bd0832
   - enabled: 1
     path: Assets/Scenes/Room_Boss_01.unity
     guid: 9918992e548f932469acbcfede2cc94f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Prototype_3D_Base.unity
     guid: 2b5f0024a0cdf424fa90332d42f95ccf
   m_configObjects:
