@@ -1,20 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
-/// <summary>
-/// Phase 2 narrative boss. Cannot take damage or deal damage.
-/// Floats in place. Triggers dialogue when player moves nearby.
-/// Player can Hug the boss when close � boss disappears and spawns PotionFragment.
-///
-/// SETUP:
-///   BossPhase2Root
-///     ??? Collider (Is Trigger = true, large � detection zone)
-///     ??? BossPhase2 (this script)
-///     ??? DialogueHandler (on same or child GameObject)
-///     ??? SpriteChild
-///           ??? SpriteRenderer (assign ghost sprite)
-///           ??? Billboard
-/// </summary>
 public class BossPhase2 : MonoBehaviour
 {
     [Header("Dialogue")]
@@ -24,12 +10,17 @@ public class BossPhase2 : MonoBehaviour
         "You don't have to carry all of this alone.",
         "Come back to me. Please."
     };
-    public float dialogueTriggerDelay = 2.5f;   // Delay after player moves
+    public float dialogueTriggerDelay = 2.5f;
     public float dialogueTriggerRange = 6f;
+
+    // FIX: Public field so it can be assigned directly in Inspector.
+    // GetComponentInChildren was failing silently → null crash every frame.
+    [Header("Dialogue Handler")]
+    public DialogueHandler dialogueHandler;
 
     [Header("Hug Interaction")]
     public float hugRange = 2f;
-    public GameObject hugPromptUI;              // "Press [E] to Hug" panel
+    public GameObject hugPromptUI;
 
     [Header("Spawn on Hug")]
     public GameObject potionFragmentPrefab;
@@ -39,20 +30,15 @@ public class BossPhase2 : MonoBehaviour
     public float floatAmplitude = 0.3f;
     public float floatSpeed = 1.2f;
 
-    // ?? Internal ?????????????????????????????????????????????????????
-
     private PlayerController playerController;
-    private DialogueHandler dialogueHandler;
-
     private Vector3 startPos;
     private bool dialoguePlayed = false;
     private bool hugDone = false;
-    private bool playerInRange = false;
 
     void Awake()
     {
-        dialogueHandler = GetComponentInChildren<DialogueHandler>();
         startPos = transform.position;
+        // dialogueHandler is now assigned via Inspector — no GetComponentInChildren
     }
 
     void Start()
@@ -66,22 +52,32 @@ public class BossPhase2 : MonoBehaviour
         }
         else
         {
-            Debug.LogError("[BossPhase2] Player not found.");
+            Debug.LogError("[BossPhase2] Player not found in Start(). Check tag.");
         }
 
-        if (hugPromptUI != null)
-            hugPromptUI.SetActive(false);
+        if (hugPromptUI != null) hugPromptUI.SetActive(false);
     }
 
     void Update()
     {
         if (hugDone) return;
 
+        // Retry player if missed on Start (handles late spawning edge case)
+        if (playerController == null)
+        {
+            GameObject p = GameObject.FindGameObjectWithTag("Player");
+            if (p != null)
+            {
+                playerController = p.GetComponent<PlayerController>();
+                if (playerController != null)
+                    playerController.OnActionPressed += TryHug;
+            }
+            return;
+        }
+
         HandleFloat();
         HandleProximity();
     }
-
-    // ?? Float ?????????????????????????????????????????????????????????
 
     private void HandleFloat()
     {
@@ -89,34 +85,33 @@ public class BossPhase2 : MonoBehaviour
         transform.position = new Vector3(startPos.x, newY, startPos.z);
     }
 
-    // ?? Proximity + Dialogue + Hug Prompt ????????????????????????????
-
     private void HandleProximity()
     {
-        if (playerController == null) return;
-
         float dist = Vector3.Distance(transform.position, playerController.transform.position);
 
-        // Dialogue trigger zone
+        // FIX: Set dialoguePlayed = true BEFORE starting coroutine.
+        // Previously set inside coroutine → multiple coroutines started each frame
+        // before the flag was set → duplicate/stuttering dialogue.
         if (!dialoguePlayed && dist <= dialogueTriggerRange)
+        {
+            dialoguePlayed = true;
             StartCoroutine(TriggerDialogueDelayed());
+        }
 
-        // Hug prompt
-        bool inHugRange = dist <= hugRange;
-        if (hugPromptUI != null && !dialogueHandler.IsRunning)
-            hugPromptUI.SetActive(inHugRange);
+        // FIX: Null-check dialogueHandler before accessing .IsRunning.
+        // If dialogueHandler was null, this line crashed every frame and stopped
+        // Update() from running → dialogue never triggered, hug never worked.
+        bool dialogueRunning = dialogueHandler != null && dialogueHandler.IsRunning;
+        if (hugPromptUI != null && !dialogueRunning)
+            hugPromptUI.SetActive(dist <= hugRange);
     }
 
     private IEnumerator TriggerDialogueDelayed()
     {
-        if (dialoguePlayed) yield break;
-        dialoguePlayed = true;
-
         yield return new WaitForSeconds(dialogueTriggerDelay);
 
         if (dialogueHandler != null)
         {
-            // Hook Action button to advance dialogue
             playerController.OnActionPressed += dialogueHandler.AdvanceDialogue;
 
             dialogueHandler.OnDialogueComplete += () =>
@@ -128,11 +123,9 @@ public class BossPhase2 : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("[BossPhase2] DialogueHandler not found.");
+            Debug.LogWarning("[BossPhase2] DialogueHandler not assigned in Inspector.");
         }
     }
-
-    // ?? Hug ??????????????????????????????????????????????????????????
 
     private void TryHug()
     {
@@ -148,17 +141,13 @@ public class BossPhase2 : MonoBehaviour
     private IEnumerator HugSequence()
     {
         hugDone = true;
+        if (hugPromptUI != null) hugPromptUI.SetActive(false);
 
-        if (hugPromptUI != null)
-            hugPromptUI.SetActive(false);
-
-        // Graceful disappear: fade out over 1 second
         SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
         if (sr != null)
         {
             float elapsed = 0f;
             Color startColor = sr.color;
-
             while (elapsed < 1f)
             {
                 elapsed += Time.deltaTime;
@@ -167,7 +156,6 @@ public class BossPhase2 : MonoBehaviour
             }
         }
 
-        // Spawn PotionFragment
         if (potionFragmentPrefab != null)
             Instantiate(potionFragmentPrefab, transform.position + spawnOffset, Quaternion.identity);
         else
@@ -175,12 +163,6 @@ public class BossPhase2 : MonoBehaviour
 
         Destroy(gameObject);
     }
-
-    // ?? Invulnerability (no damage, no health component needed) ??????
-
-    // BossPhase2 intentionally has NO Health component.
-    // If one is added by mistake, this prevents interaction:
-    void OnTriggerEnter(Collider other) { /* intentionally empty */ }
 
     void OnDestroy()
     {
