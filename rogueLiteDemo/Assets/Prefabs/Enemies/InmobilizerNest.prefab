@@ -99,9 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e396c3b32249840b2fe82ff2b56074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 0
-  currentHP: 0
-  dustReward: 15
+  maxHP: 40
+  currentHP: 40
+  manageOwnDestruction: 0
 --- !u!114 &2094836650995631778
 MonoBehaviour:
   m_ObjectHideFlags: 0

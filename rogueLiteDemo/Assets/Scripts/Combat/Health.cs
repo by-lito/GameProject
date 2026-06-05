@@ -35,6 +35,14 @@ public class Health : MonoBehaviour, IDamageable
             OnDamage?.Invoke(amount);
             Debug.Log($"{gameObject.name} - Purificación: {currentHP} / {maxHP}");
 
+            // FIX 4: Keep PlayerController's local tracking and HUD synced!
+            PlayerController pc = GetComponent<PlayerController>();
+            if (pc != null)
+            {
+                pc.currentHealth = currentHP;
+                pc.ActualizarHUDLocal();
+            }
+
             Animator anim = GetComponentInChildren<Animator>();
             if (anim != null) anim.SetTrigger("isHit");
 
@@ -57,6 +65,14 @@ public class Health : MonoBehaviour, IDamageable
             currentHP -= amount;
             currentHP = Mathf.Clamp(currentHP, 0, maxHP);
             OnHeal?.Invoke(amount);
+
+            // FIX 4 (Cont.): Sync UI on Heal
+            PlayerController pc = GetComponent<PlayerController>();
+            if (pc != null)
+            {
+                pc.currentHealth = currentHP;
+                pc.ActualizarHUDLocal();
+            }
         }
         else
         {

@@ -59,17 +59,14 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        // Si venimos de Firebase, tomamos esos datos iniciales para la sesi�n de juego local
-        if (FirebaseAuthHandler.Instance != null && FirebaseSaveHandler.Instance != null)
+        // FIX 5: Synchronize initial inverted health state on spawn
+        Health h = GetComponent<Health>();
+        if (h != null)
         {
-            // Nota: Si tus compaeros guardan los datos en alguna variable est�tica de FirebaseSaveHandler, 
-            // puedes asignarlos aqu. Si no, empezamos con valores est�ndar o los cargados por defecto:
-            ActualizarHUDLocal();
+            currentHealth = h.currentHP;
         }
-        else
-        {
-            ActualizarHUDLocal();
-        }
+
+        ActualizarHUDLocal();
     }
 
     // --- M�TODOS DE ENTRADA (INPUT SYSTEM) ---

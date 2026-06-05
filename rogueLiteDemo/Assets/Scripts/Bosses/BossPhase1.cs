@@ -235,15 +235,15 @@ public class BossPhase1 : EnemyBase
     {
         if (player == null) return;
 
-        Vector3 dir = (player.position - shootPoint.position).normalized;
-        Quaternion rot = Quaternion.LookRotation(dir);
+        Vector3 direction = (player.position - shootPoint.position).normalized;
 
-        GameObject proj = Instantiate(projectilePrefab, shootPoint.position, rot);
+        // Use Quaternion.identity so the Sprite doesn't rotate out of view
+        GameObject proj = Instantiate(projectilePrefab, shootPoint.position, Quaternion.identity);
 
-        // Configure HealerProjectile if that's the prefab being reused
         HealerProjectile hp = proj.GetComponent<HealerProjectile>();
         if (hp != null)
         {
+            hp.SetDirection(direction); // <--- Pass the direction here
             hp.healAmount = projectileHealAmount;
             hp.knockbackForce = projectileKnockback;
         }
