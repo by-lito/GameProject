@@ -14,6 +14,15 @@ public class FirebaseAuthHandler : MonoBehaviour
     [Header("UI Control")]
     [SerializeField] private GameObject playButtonGO;
 
+    // ─────────────────────────────────────────────────────────────────
+    // LA CASILLA DONDE COLECTAREMOS TU TEXTO AMARILLO
+    // ─────────────────────────────────────────────────────────────────
+    [Header("Configuración Emergencia Examen")]
+    [SerializeField] private GameObject textoAvisoL_GO; 
+    private float timer = 0f;
+    private bool mensajeMostrado = false;
+    // ─────────────────────────────────────────────────────────────────
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -29,119 +38,93 @@ public class FirebaseAuthHandler : MonoBehaviour
     private void Start()
     {
         auth = FirebaseAuth.DefaultInstance;
+
+        // Al empezar, apagamos el cartel para que el menú parezca normal
+        if (textoAvisoL_GO != null)
+        {
+            textoAvisoL_GO.SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        // Si pasan 3 segundos colgado sin internet ni usuario, activamos tu cartel amarillo
+        if (!mensajeMostrado && CurrentUser == null)
+        {
+            timer += Time.deltaTime;
+            if (timer >= 3f)
+            {
+                mensajeMostrado = true;
+                
+                if (textoAvisoL_GO != null)
+                {
+                    textoAvisoL_GO.SetActive(true);
+                    Debug.LogWarning("Modo seguro: Activando cartel estático de la Tecla L.");
+                }
+            }
+        }
+
+        // Si pulsas la 'L', saltas directamente a la demo del juego
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Debug.LogWarning("¡Bypass activado! Saltando al Lobby.");
+
+            if (playButtonGO != null)
+            {
+                playButtonGO.SetActive(true);
+            }
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Scenes/Lobby_3D");
+        }
     }
 
     public void RegisterWithEmail(string email, string password)
     {
-        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
-        {
-            Debug.LogError("El email y la contraseña no pueden estar vacíos.");
-            return;
-        }
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password)) return;
 
         auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
         {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("Registro cancelado.");
-                return;
-            }
-
-            if (task.IsFaulted)
-            {
-                Debug.LogError("Error al registrar usuario: " + task.Exception);
-                return;
-            }
-
+            if (task.IsCanceled || task.IsFaulted) return;
             CurrentUser = task.Result.User;
-            Debug.Log("Usuario registrado correctamente en Auth. UID: " + CurrentUser.UserId);
-
-            // ¡AQUÍ ESTÁ EL CAMBIO CRUCIAL! 
-            // En vez de cargar datos que no existen, creamos su nuevo documento en Firestore
             CreateNewPlayerData(CurrentUser.UserId);
         });
     }
 
     private void CreateNewPlayerData(string userId)
     {
-        // Accedemos a Firestore directamente
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
         DocumentReference docRef = db.Collection("players").Document(userId);
 
-        // Estructura de datos idéntica a la que tienes en tu consola de Firebase
         Dictionary<string, object> defaultData = new Dictionary<string, object>
         {
             { "coins", 0 },
-            { "currentHealth", 0 },
+            { "currentHealth", 100 }, 
             { "deaths", 0 },
             { "enemiesDefeated", 0 },
-            { "inventory", new List<string>() }, // Lista vacía para la EspadaBase, etc.
+            { "inventory", new List<string>() }, 
             { "maxHealth", 100 },
             { "permanentMoney", 0 },
             { "roomsCompleted", 0 }
         };
 
-        Debug.Log("Creando documento en Firestore para el nuevo usuario...");
-
         docRef.SetAsync(defaultData).ContinueWithOnMainThread(firestoreTask =>
         {
-            if (firestoreTask.IsFaulted || firestoreTask.IsCanceled)
-            {
-                Debug.LogError("Error al crear el documento en Firestore: " + firestoreTask.Exception);
-                return;
-            }
-
-            Debug.Log("¡Documento de Firestore creado con éxito!");
-
-            // ─────────────────────────────────────────────────────────
-            // (Al registrarse con éxito, activamos el PLAY)
-            if (playButtonGO != null)
-            {
-                playButtonGO.SetActive(true);
-            }
-            // ─────────────────────────────────────────────────────────
-
-            // Ahora que el documento YA existe físicamente en la nube, 
-            // llamamos a vuestro SaveHandler para que lo lea y actualice el HUD
-            if (FirebaseSaveHandler.Instance != null)
-            {
-                FirebaseSaveHandler.Instance.LoadPlayerData();
-            }
+            if (firestoreTask.IsFaulted || firestoreTask.IsCanceled) return;
+            if (playButtonGO != null) playButtonGO.SetActive(true);
+            if (FirebaseSaveHandler.Instance != null) FirebaseSaveHandler.Instance.LoadPlayerData();
         });
     }
 
     public void LoginWithEmail(string email, string password)
     {
-        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
-        {
-            Debug.LogError("El email y la contraseña no pueden estar vacíos.");
-            return;
-        }
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password)) return;
 
         auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
         {
-            if (task.IsCanceled || task.IsFaulted)
-            {
-                Debug.LogError("Error al iniciar sesión: " + task.Exception);
-                return;
-            }
-
+            if (task.IsCanceled || task.IsFaulted) return;
             CurrentUser = task.Result.User;
-            Debug.Log("Usuario inició sesión correctamente. UID: " + CurrentUser.UserId);
-            Debug.Log("Email: " + CurrentUser.Email);
-
-            // ─────────────────────────────────────────────────────────
-            // ¡AQUÍ TAMBIÉN VA! (Al loguearse bien, activamos el PLAY)
-            if (playButtonGO != null)
-            {
-                playButtonGO.SetActive(true);
-            }
-            // ─────────────────────────────────────────────────────────
-
-            if (FirebaseSaveHandler.Instance != null)
-            {
-                FirebaseSaveHandler.Instance.LoadPlayerData();
-            }
+            if (playButtonGO != null) playButtonGO.SetActive(true);
+            if (FirebaseSaveHandler.Instance != null) FirebaseSaveHandler.Instance.LoadPlayerData();
         });
     }
 
@@ -149,17 +132,11 @@ public class FirebaseAuthHandler : MonoBehaviour
     {
         auth.SignOut();
         CurrentUser = null;
-        Debug.Log("Sesión cerrada correctamente.");
     }
 
     public string GetUserId()
     {
-        if (CurrentUser == null)
-        {
-            Debug.LogWarning("No hay usuario autenticado.");
-            return null;
-        }
-
+        if (CurrentUser == null) return null;
         return CurrentUser.UserId;
     }
 }

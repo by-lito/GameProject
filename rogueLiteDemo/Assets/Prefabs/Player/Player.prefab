@@ -348,5 +348,5 @@ MonoBehaviour:
   dashSpeed: 20
   dashDuration: 0.2
   dashCooldown: 1
-  projectilePrefab: {fileID: 5392925949608424734, guid: a3d1d2307061fa94f895ca05c9a6cf92, type: 3}
+  projectilePrefab: {fileID: 5392925949608424734, guid: 9b4f9e0c0d76fc649b125fc713bfc5af, type: 3}
   shootPoint: {fileID: 502631696611540683}
