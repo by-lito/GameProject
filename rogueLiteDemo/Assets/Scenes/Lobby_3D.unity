@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 364061849}
   m_Layer: 0
   m_Name: Wall_East
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -378,7 +378,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f327ab348d79874ea1a9b299141fd6e, type: 2}
+  - {fileID: 2100000, guid: a342262abbde8f9489940240fd160789, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -623,7 +623,7 @@ GameObject:
   - component: {fileID: 1091445212}
   m_Layer: 0
   m_Name: Wall_North
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -674,7 +674,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f327ab348d79874ea1a9b299141fd6e, type: 2}
+  - {fileID: 2100000, guid: a342262abbde8f9489940240fd160789, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -828,7 +828,7 @@ Transform:
   m_GameObject: {fileID: 1293245062}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.04, y: 0, z: -0.01}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -846,9 +846,10 @@ GameObject:
   - component: {fileID: 1293821262}
   - component: {fileID: 1293821261}
   - component: {fileID: 1293821260}
+  - component: {fileID: 1293821264}
   m_Layer: 0
   m_Name: Wall_South
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -899,7 +900,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f327ab348d79874ea1a9b299141fd6e, type: 2}
+  - {fileID: 2100000, guid: a342262abbde8f9489940240fd160789, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -946,6 +947,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 111849551}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1293821264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293821259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc8f16a95640d8f4b9cf221ba7e65039, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallFade
+  opaqueMaterial: {fileID: 2100000, guid: a342262abbde8f9489940240fd160789, type: 2}
+  fadeMaterial: {fileID: 2100000, guid: 44311f288bfdd1a4c8175026434c5313, type: 2}
+  fadedAlpha: 0.25
+  fadeSpeed: 8
 --- !u!1 &1307226972
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,7 +977,7 @@ GameObject:
   - component: {fileID: 1307226973}
   m_Layer: 0
   m_Name: Wall_West
-  m_TagString: Untagged
+  m_TagString: Walls
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

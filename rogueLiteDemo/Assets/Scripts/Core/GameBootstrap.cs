@@ -1,16 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// Punto de entrada de la aplicación. Vive en la escena Boot (índice 0).
-/// Inicializa los sistemas core en orden y luego carga el menú principal.
-/// </summary>
 public class GameBootstrap : MonoBehaviour
 {
     [Header("Boot Settings")]
     [SerializeField] private string firstScene = "MainMenu";
+    [Tooltip("Segundos que se muestra la pantalla RECUERDA antes de ir al menú.")]
+    [SerializeField] private float titleDuration = 3f;
 
-    [Header("Core Prefabs (optional — assign if not in scene)")]
+    [Header("Core Prefabs (optional)")]
     [SerializeField] private GameManager gameManagerPrefab;
 
     void Awake()
@@ -20,10 +19,14 @@ public class GameBootstrap : MonoBehaviour
 
     void Start()
     {
-        LoadFirstScene();
+        StartCoroutine(ShowTitleThenLoad());
     }
 
-    // ── Inicialización ───────────────────────────────────────────────
+    private IEnumerator ShowTitleThenLoad()
+    {
+        yield return new WaitForSeconds(titleDuration);
+        LoadFirstScene();
+    }
 
     private void InitializeSystems()
     {
@@ -36,10 +39,7 @@ public class GameBootstrap : MonoBehaviour
     {
         if (GameManager.Instance != null) return;
 
-        if (gameManagerPrefab != null)
-        {
-            Instantiate(gameManagerPrefab);
-        }
+        if (gameManagerPrefab != null) Instantiate(gameManagerPrefab);
         else
         {
             GameObject go = new GameObject("GameManager");
@@ -48,29 +48,22 @@ public class GameBootstrap : MonoBehaviour
         }
     }
 
-    // Crea UNA billetera persistente para toda la sesión.
-    // El Angel Dust y el dinero permanente sobreviven a los cambios de escena.
-    // IMPORTANTE: no coloques PlayerWallet en ninguna escena; de esto se encarga el Boot.
     private void EnsureWallet()
     {
         if (PlayerWallet.instance != null) return;
-
         GameObject go = new GameObject("PlayerWallet");
         go.AddComponent<PlayerWallet>();
         DontDestroyOnLoad(go);
         Debug.Log("[Bootstrap] PlayerWallet persistente creada.");
     }
 
-    // ── Carga de escena ──────────────────────────────────────────────
-
     private void LoadFirstScene()
     {
         if (string.IsNullOrEmpty(firstScene))
         {
-            Debug.LogError("[Bootstrap] firstScene name is empty. Set it in the Inspector.");
+            Debug.LogError("[Bootstrap] firstScene name is empty.");
             return;
         }
-
         SceneManager.LoadScene(firstScene);
     }
 }

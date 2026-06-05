@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7553042319638632154}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 221880351686904300}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.055, y: 0.89, z: 0}
+  m_LocalPosition: {x: 0.06, y: 0.6, z: 0}
   m_LocalScale: {x: 0.11547344, y: 0.12121212, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 1000717692446832756}
   - component: {fileID: 6738773859516584459}
   - component: {fileID: 2044098451677241936}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,7 +154,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 502631696611540683}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -170,7 +170,7 @@ Transform:
   m_GameObject: {fileID: 820288958730654830}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.103, y: 0.924, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: -1120799645911314664}
   - component: {fileID: 1691072060447764012}
   - component: {fileID: 1645128156242139933}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -340,7 +340,7 @@ MonoBehaviour:
   coins: 0
   roomsCompleted: 0
   attackPoint: {fileID: 7553042319638632154}
-  attackRange: 0.8
+  attackRange: 1
   meleeDamage: 10
   enemyLayers:
     serializedVersion: 2

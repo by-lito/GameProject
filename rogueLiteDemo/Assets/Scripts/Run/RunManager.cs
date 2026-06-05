@@ -25,6 +25,7 @@ public class RunManager : MonoBehaviour
     [SerializeField] private string shopScene = "Room_Shop_01";
     [SerializeField] private string bossScene = "Room_Boss_01";
     [SerializeField] private string lobbyScene = "Lobby_3D";
+    [SerializeField] private string endDemoScene = "EndDemo";
 
     private int currentIndex = -1;      
     private string lastCombatScene = ""; 
@@ -72,8 +73,8 @@ public class RunManager : MonoBehaviour
 
     private void CompleteRun()
     {
-        Debug.Log("[RunManager] Run completada. Volviendo al Lobby.");
-        LoadScene(lobbyScene);
+        Debug.Log("[RunManager] Run completada. Pantalla de fin.");
+        LoadScene(endDemoScene);
     }
 
     private string SceneForSlot(RoomKind kind)
