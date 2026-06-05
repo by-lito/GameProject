@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0de7887c4cf77e4db9f728081eb1ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExitPortal3D
+  mode: 1
   sceneToLoad: Prototype_3D_Base
 --- !u!65 &334476830
 BoxCollider:
