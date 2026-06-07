@@ -18,16 +18,16 @@ El juego cuenta con soporte híbrido completo. Puedes jugar utilizando el combo 
 ### ⌨️ Configuración: Teclado y Ratón
 * **Movimiento del personaje:** Teclas `W`, `A`, `S`, `D` (o las Flechas de dirección).
 * **Avanzar diálogo e interacciones:** Teclas `E`.
-* **Cámara / Mirada:** Mover el `Ratón`.
-* **Ataque Principal / Interactuar:** Clic Izquierdo del `Ratón`.
-* **Esquivar / Dash:** Barra `Espaciadora`.
+* **Ataque Principal:** Clic Izquierdo del `Ratón`.
+* **Ataque Rango:** Clic Derecho del `Ratón`.
+* **Esquivar / Dash:** Tecla `Q`.
 * **Menú de Pausa:** Tecla `Esc` (Escape).
 
 ### 🎮 Configuración: Mando (Gamepad)
 * **Movimiento del personaje:** Joystick Izquierdo (`Left Stick`).
-* **Cámara / Mirada:** Joystick Derecho (`Right Stick`).
-* **Ataque Principal / Interactuar:** Botón `X` (PlayStation) / `A` (Xbox) o Gatillo Derecho (`R2`/`RT`).
-* **Esquivar / Dash:** Botón `O` (PlayStation) / `B` (Xbox) o Botón Inferior Izquierdo.
+* **Ataque Principal / Interactuar:** Botón `X` / Presionar Joystick Derecho (`Right Stick`).
+* **Ataque Rango:** Botón trasero `R2`.
+* **Esquivar / Dash:** Botón `B`.
 * **Menú de Pausa:** Botón `Options` / `Start`.
 
 ---
