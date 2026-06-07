@@ -75,9 +75,9 @@ Al arrancar el juego, se presentará la interfaz de acceso para gestionar el pro
 
 Este proyecto ha sido diseñado, programado y testeado de forma conjunta para el Trabajo de Fin de Grado (TFG) por:
 
-* **Ángel Miguel Felipe ** — Desarrollador de Software / Arquitectura de Inteligencia Artificial (IA), Lógica de Enemigos y Diseño de Sistema de Comportamiento 🗺️🧠
-* **Laura Pinel García ** — Desarrolladora de Software / Diseño de Sistemas, Experiencia de Usuario e Interfaz (UI/UX) 💻
-* **David Guelar Franch ** — Desarrollador de Software / Mecánicas de Juego Base, Sistema de Combate y Control de Físicas (Gameplay) 🕹️
-* **Eugenia de Bertodano Lueña ** — Desarrolladora de Software / Integración de Sistemas Cloud, Autenticación y Persistencia de Datos (Firebase) ☁️
+* **Ángel Miguel Felipe** — Desarrollador de Software / Arquitectura de Inteligencia Artificial (IA), Lógica de Enemigos y Diseño de Sistema de Comportamiento 🗺️🧠
+* **Laura Pinel García** — Desarrolladora de Software / Mecánicas de Combate del Jugador, Animaciones, Backend y Diseño de Interfaz (UI/UX) ⚔️💻
+* **David Guelar Franch** — Desarrollador de Software / Lógica de Gameloop, Generación de Salas, Diseño de Niveles y Sistema de Portales 🕹️🚪
+* **Eugenia de Bertodano Lueña** — Desarrolladora de Software / Integración de Sistemas Cloud, Autenticación y Persistencia de Datos (Firebase) ☁️
 
 *Agradecimientos especiales al tribunal evaluador por su tiempo y consideración durante la defensa de este proyecto.*
