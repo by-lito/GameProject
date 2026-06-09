@@ -17,7 +17,7 @@ public class FirebaseAuthHandler : MonoBehaviour
     // ─────────────────────────────────────────────────────────────────
     // LA CASILLA DONDE COLECTAREMOS TU TEXTO AMARILLO
     // ─────────────────────────────────────────────────────────────────
-    [Header("Configuración Emergencia Examen")]
+    [Header("Configuración Emergencia Inicio de Sesión")]
     [SerializeField] private GameObject textoAvisoL_GO; 
     private float timer = 0f;
     private bool mensajeMostrado = false;
@@ -59,13 +59,13 @@ public class FirebaseAuthHandler : MonoBehaviour
                 if (textoAvisoL_GO != null)
                 {
                     textoAvisoL_GO.SetActive(true);
-                    Debug.LogWarning("Modo seguro: Activando cartel estático de la Tecla L.");
+                    Debug.LogWarning("Modo seguro: Activando cartel estático de la Tecla F1.");
                 }
             }
         }
 
-        // Si pulsas la 'L', saltas directamente a la demo del juego
-        if (Input.GetKeyDown(KeyCode.L))
+        // Si pulsas 'F1', saltas directamente a la demo del juego
+        if (Input.GetKeyDown(KeyCode.F1))
         {
             Debug.LogWarning("¡Bypass activado! Saltando al Lobby.");
 

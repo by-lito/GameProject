@@ -18,16 +18,16 @@ El juego cuenta con soporte híbrido completo. Puedes jugar utilizando el combo 
 ### ⌨️ Configuración: Teclado y Ratón
 * **Movimiento del personaje:** Teclas `W`, `A`, `S`, `D` (o las Flechas de dirección).
 * **Avanzar diálogo e interacciones:** Teclas `E`.
-* **Cámara / Mirada:** Mover el `Ratón`.
-* **Ataque Principal / Interactuar:** Clic Izquierdo del `Ratón`.
-* **Esquivar / Dash:** Barra `Espaciadora`.
+* **Ataque Principal:** Clic Izquierdo del `Ratón`.
+* **Ataque Rango:** Clic Derecho del `Ratón`.
+* **Esquivar / Dash:** Tecla `Q`.
 * **Menú de Pausa:** Tecla `Esc` (Escape).
 
 ### 🎮 Configuración: Mando (Gamepad)
 * **Movimiento del personaje:** Joystick Izquierdo (`Left Stick`).
-* **Cámara / Mirada:** Joystick Derecho (`Right Stick`).
-* **Ataque Principal / Interactuar:** Botón `X` (PlayStation) / `A` (Xbox) o Gatillo Derecho (`R2`/`RT`).
-* **Esquivar / Dash:** Botón `O` (PlayStation) / `B` (Xbox) o Botón Inferior Izquierdo.
+* **Ataque Principal / Interactuar:** Botón `X` / Presionar Joystick Derecho (`Right Stick`).
+* **Ataque Rango:** Botón trasero `R2`.
+* **Esquivar / Dash:** Botón `B`.
 * **Menú de Pausa:** Botón `Options` / `Start`.
 
 ---
@@ -75,9 +75,9 @@ Al arrancar el juego, se presentará la interfaz de acceso para gestionar el pro
 
 Este proyecto ha sido diseñado, programado y testeado de forma conjunta para el Trabajo de Fin de Grado (TFG) por:
 
-* **Ángel Miguel Felipe ** — Desarrollador de Software / Arquitectura de Inteligencia Artificial (IA), Lógica de Enemigos y Diseño de Sistema de Comportamiento 🗺️🧠
-* **Laura Pinel García ** — Desarrolladora de Software / Diseño de Sistemas, Experiencia de Usuario e Interfaz (UI/UX) 💻
-* **David Guelar Franch ** — Desarrollador de Software / Mecánicas de Juego Base, Sistema de Combate y Control de Físicas (Gameplay) 🕹️
-* **Eugenia de Bertodano Lueña ** — Desarrolladora de Software / Integración de Sistemas Cloud, Autenticación y Persistencia de Datos (Firebase) ☁️
+* **Ángel Miguel Felipe** — Desarrollador de Software / Arquitectura de Inteligencia Artificial (IA), Lógica de Enemigos y Diseño de Sistema de Comportamiento 🗺️🧠
+* **Laura Pinel García** — Desarrolladora de Software / Mecánicas de Combate del Jugador, Animaciones, Backend y Diseño de Interfaz (UI/UX) ⚔️💻
+* **David Guelar Franch** — Desarrollador de Software / Lógica de Gameloop, Generación de Salas, Diseño de Niveles y Sistema de Portales 🕹️🚪
+* **Eugenia de Bertodano Lueña** — Desarrolladora de Software / Integración de Sistemas Cloud, Autenticación y Persistencia de Datos (Firebase) ☁️
 
 *Agradecimientos especiales al tribunal evaluador por su tiempo y consideración durante la defensa de este proyecto.*
