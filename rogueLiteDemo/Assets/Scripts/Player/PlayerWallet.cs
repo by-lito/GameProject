@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerWallet : MonoBehaviour
 {
-    public static PlayerWallet instance; // Esto permite que otros scripts te encuentren fácil
+    public static PlayerWallet instance; // Esto permite que otros scripts te encuentren fï¿½cil
 
     [Header("RUN (Se pierde al morir)")]
     public int angelDust = 0;
@@ -13,31 +13,32 @@ public class PlayerWallet : MonoBehaviour
     public int permanentMoney = 0; // Lo que ganas al final del nivel
 
 
-    // Asegura de que solo haya una billetera en el juego y que se registre a sí misma al iniciar el juego.
+    // Asegura de que solo haya una billetera en el juego y que se registre a sï¿½ misma al iniciar el juego.
     void Awake()
     {
-        instance = this; // Al empezar, este script se registra a sí mismo
+        instance = this; // Al empezar, este script se registra a sï¿½ mismo
     }
 
-    // Esto se llama cuando matas al triángulo rojo
+    // Esto se llama cuando matas al triï¿½ngulo rojo
     public void AddAngelDust(int amount)
     {
         angelDust += amount;
-        Debug.Log("¡Polvo de Ángel recogido! Total: " + angelDust);
+        StatsTracker.Instance?.AddMoney(amount);
+        Debug.Log("ï¿½Polvo de ï¿½ngel recogido! Total: " + angelDust);
     }
 
     // Llama a esto cuando el jugador muera o reinicie la partida
     public void ResetRun()
     {
         angelDust = 0;
-        Debug.Log("Run terminada. El Polvo de Ángel se ha esfumado.");
+        Debug.Log("Run terminada. El Polvo de ï¿½ngel se ha esfumado.");
     }
 
     // Esto se llama solo cuando tocas la meta/final del nivel
     public void AddEndLevelReward(int amount)
     {
         permanentMoney += amount;
-        Debug.Log("¡Nivel superado! Dinero para el Lobby: " + permanentMoney);
+        Debug.Log("ï¿½Nivel superado! Dinero para el Lobby: " + permanentMoney);
     }
 
     // Para la tienda de la RUN
@@ -47,12 +48,12 @@ public class PlayerWallet : MonoBehaviour
         return angelDust >= cost;
     }
 
-    // 2. Usar este método para gastar polvo de ángel.
+    // 2. Usar este mï¿½todo para gastar polvo de ï¿½ngel.
     public bool SpendDust(int cost)
     {
         if (angelDust >= cost)
         {
-            // Restamos el coste al total de polvo de ángel
+            // Restamos el coste al total de polvo de ï¿½ngel
             angelDust -= cost;
             return true;
         }
@@ -60,7 +61,7 @@ public class PlayerWallet : MonoBehaviour
     }
 
     //Para la tienda del LOBBY
-    // Método para gastar el dinero que no se pierde al morir (Lobby/Nexo)
+    // Mï¿½todo para gastar el dinero que no se pierde al morir (Lobby/Nexo)
     public void SpendPermanentMoney(int amount)
     {
         // Restamos la cantidad al total permanente

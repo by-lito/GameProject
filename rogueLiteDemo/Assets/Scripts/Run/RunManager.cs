@@ -42,9 +42,12 @@ public class RunManager : MonoBehaviour
         Debug.Log("[RunManager] Listo. Salas en la run: " + runSequence.Count);
     }
 
+    public int RoomsCompletedThisRun { get; private set; }
+
     public void StartRun()
     {
         currentIndex = -1;
+        RoomsCompletedThisRun = 0;
         lastCombatScene = "";
 
         if (PlayerWallet.instance != null)
@@ -58,6 +61,11 @@ public class RunManager : MonoBehaviour
 
     public void LoadNextRoom()
     {
+        if (currentIndex >= 0)
+        {
+            StatsTracker.Instance?.AddRoomCompleted();
+            RoomsCompletedThisRun++; 
+        }
         currentIndex++;
 
         if (currentIndex >= runSequence.Count)
@@ -73,6 +81,8 @@ public class RunManager : MonoBehaviour
 
     private void CompleteRun()
     {
+        StatsTracker.Instance?.AddRunCompleted();
+        StatsTracker.Instance?.Flush();
         Debug.Log("[RunManager] Run completada. Pantalla de fin.");
         LoadScene(endDemoScene);
     }
