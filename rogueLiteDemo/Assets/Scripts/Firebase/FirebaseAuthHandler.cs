@@ -1,142 +1,117 @@
 using UnityEngine;
+using TMPro;
 using Firebase.Auth;
 using Firebase.Extensions;
-using Firebase.Firestore;
-using System.Collections.Generic;
 
 public class FirebaseAuthHandler : MonoBehaviour
 {
     public static FirebaseAuthHandler Instance { get; private set; }
 
+    [Header("Campos de UI")]
+    [SerializeField] private TMP_InputField emailField;
+    [SerializeField] private TMP_InputField passwordField;
+    [SerializeField] private TMP_Text statusText;   
+    [SerializeField] private GameObject playButton; 
+    [SerializeField] private GameObject rankingButton;
+
     private FirebaseAuth auth;
     public FirebaseUser CurrentUser { get; private set; }
 
-    [Header("UI Control")]
-    [SerializeField] private GameObject playButtonGO;
-
-    // ─────────────────────────────────────────────────────────────────
-    // LA CASILLA DONDE COLECTAREMOS TU TEXTO AMARILLO
-    // ─────────────────────────────────────────────────────────────────
-    [Header("Configuración Emergencia Inicio de Sesión")]
-    [SerializeField] private GameObject textoAvisoL_GO; 
-    private float timer = 0f;
-    private bool mensajeMostrado = false;
-    // ─────────────────────────────────────────────────────────────────
-
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
     {
-        auth = FirebaseAuth.DefaultInstance;
-
-        // Al empezar, apagamos el cartel para que el menú parezca normal
-        if (textoAvisoL_GO != null)
-        {
-            textoAvisoL_GO.SetActive(false);
-        }
+        if (playButton != null) playButton.SetActive(false);
+        if (rankingButton != null) rankingButton.SetActive(false);
+        SetStatus("");
     }
 
-    private void Update()
+    private FirebaseAuth Auth => auth ??= FirebaseAuth.DefaultInstance;
+
+    public void OnRegisterClicked() => Register(emailField.text.Trim(), passwordField.text);
+    public void OnLoginClicked()    => Login(emailField.text.Trim(), passwordField.text);
+
+    public void Register(string email, string password)
     {
-        // Si pasan 3 segundos colgado sin internet ni usuario, activamos tu cartel amarillo
-        if (!mensajeMostrado && CurrentUser == null)
+        if (!ValidInput(email, password)) return;
+        SetStatus("Creando cuenta...");
+
+        Auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
         {
-            timer += Time.deltaTime;
-            if (timer >= 3f)
-            {
-                mensajeMostrado = true;
-                
-                if (textoAvisoL_GO != null)
-                {
-                    textoAvisoL_GO.SetActive(true);
-                    Debug.LogWarning("Modo seguro: Activando cartel estático de la Tecla F1.");
-                }
-            }
-        }
+            if (task.IsFaulted) { SetStatus(TranslateError(task.Exception)); return; }
 
-        // Si pulsas 'F1', saltas directamente a la demo del juego
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            Debug.LogWarning("¡Bypass activado! Saltando al Lobby.");
-
-            if (playButtonGO != null)
-            {
-                playButtonGO.SetActive(true);
-            }
-
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Scenes/Lobby_3D");
-        }
-    }
-
-    public void RegisterWithEmail(string email, string password)
-    {
-        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password)) return;
-
-        auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
-        {
-            if (task.IsCanceled || task.IsFaulted) return;
             CurrentUser = task.Result.User;
-            CreateNewPlayerData(CurrentUser.UserId);
+            if (StatsTracker.Instance != null) StatsTracker.Instance.CreateNewUser(CurrentUser.UserId, email);
+            OnAuthSuccess("Cuenta creada. ¡Bienvenido!");
         });
     }
 
-    private void CreateNewPlayerData(string userId)
+    public void Login(string email, string password)
     {
-        FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("players").Document(userId);
+        if (!ValidInput(email, password)) return;
+        SetStatus("Entrando...");
 
-        Dictionary<string, object> defaultData = new Dictionary<string, object>
+        Auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
         {
-            { "coins", 0 },
-            { "currentHealth", 100 }, 
-            { "deaths", 0 },
-            { "enemiesDefeated", 0 },
-            { "inventory", new List<string>() }, 
-            { "maxHealth", 100 },
-            { "permanentMoney", 0 },
-            { "roomsCompleted", 0 }
-        };
+            if (task.IsFaulted) { SetStatus(TranslateError(task.Exception)); return; }
 
-        docRef.SetAsync(defaultData).ContinueWithOnMainThread(firestoreTask =>
-        {
-            if (firestoreTask.IsFaulted || firestoreTask.IsCanceled) return;
-            if (playButtonGO != null) playButtonGO.SetActive(true);
-            if (FirebaseSaveHandler.Instance != null) FirebaseSaveHandler.Instance.LoadPlayerData();
-        });
-    }
-
-    public void LoginWithEmail(string email, string password)
-    {
-        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password)) return;
-
-        auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
-        {
-            if (task.IsCanceled || task.IsFaulted) return;
             CurrentUser = task.Result.User;
-            if (playButtonGO != null) playButtonGO.SetActive(true);
-            if (FirebaseSaveHandler.Instance != null) FirebaseSaveHandler.Instance.LoadPlayerData();
+            if (StatsTracker.Instance != null) StatsTracker.Instance.SetUser(CurrentUser.UserId);
+            OnAuthSuccess("Sesión iniciada.");
         });
     }
 
     public void Logout()
     {
-        auth.SignOut();
+        Auth.SignOut();
         CurrentUser = null;
+        if (playButton != null) playButton.SetActive(false);
+        if (rankingButton != null) rankingButton.SetActive(false);
     }
 
-    public string GetUserId()
+    public string GetUserId() => CurrentUser?.UserId;
+
+    private void OnAuthSuccess(string msg)
     {
-        if (CurrentUser == null) return null;
-        return CurrentUser.UserId;
+        SetStatus(msg);
+        if (playButton != null) playButton.SetActive(true);
+        if (rankingButton != null) rankingButton.SetActive(true);
+    }
+
+    private bool ValidInput(string email, string password)
+    {
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+        {
+            SetStatus("Rellena email y contraseña."); return false;
+        }
+        if (password.Length < 6)
+        {
+            SetStatus("La contraseña debe tener al menos 6 caracteres."); return false;
+        }
+        return true;
+    }
+
+    private void SetStatus(string msg) { if (statusText != null) statusText.text = msg; }
+
+    private string TranslateError(System.AggregateException ex)
+    {
+        var fbEx = ex?.GetBaseException() as Firebase.FirebaseException;
+        if (fbEx == null) return "Error desconocido.";
+
+        switch ((AuthError)fbEx.ErrorCode)
+        {
+            case AuthError.EmailAlreadyInUse: return "Ese email ya está registrado.";
+            case AuthError.InvalidEmail:      return "El email no es válido.";
+            case AuthError.WrongPassword:     return "Contraseña incorrecta.";
+            case AuthError.UserNotFound:      return "No existe una cuenta con ese email.";
+            case AuthError.WeakPassword:      return "La contraseña es demasiado débil.";
+            case AuthError.MissingPassword:   return "Falta la contraseña.";
+            default:                          return "Error: " + fbEx.Message;
+        }
     }
 }

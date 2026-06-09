@@ -268,8 +268,6 @@ public class PlayerController : MonoBehaviour
         if (HUDController.Instance != null)
         {
             HUDController.Instance.SetVidas(currentHealth);
-            HUDController.Instance.SetMonedas(coins);
-            HUDController.Instance.SetSalas(roomsCompleted);
         }
     }
 

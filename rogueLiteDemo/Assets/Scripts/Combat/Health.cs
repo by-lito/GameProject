@@ -88,6 +88,9 @@ public class Health : MonoBehaviour, IDamageable
 
         if (gameObject.CompareTag("Player"))
         {
+            StatsTracker.Instance?.AddDeath();
+            StatsTracker.Instance?.Flush();
+            
             Debug.Log("Has resucitado por completo... Volviendo al lobby.");
             Animator anim = GetComponentInChildren<Animator>();
             if (anim != null) anim.SetTrigger("isDead");
