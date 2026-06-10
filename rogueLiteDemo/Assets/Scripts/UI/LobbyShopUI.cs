@@ -39,6 +39,8 @@ public class LobbyShopUI : MonoBehaviour
 
     private PlayerController currentPlayer;
 
+
+
     void Awake()
     {
         gameObject.SetActive(false);

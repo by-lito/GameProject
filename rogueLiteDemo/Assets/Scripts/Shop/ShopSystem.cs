@@ -1,81 +1,100 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
+/// <summary>
+/// Run shop vendor. Place on each item vendor object in Room_Shop_01.
+/// Uses OnActionPressed (Input System) â€” NOT Input.GetKeyDown.
+/// Spends AngelDust (run currency from PlayerWallet).
+///
+/// PREFAB STRUCTURE per vendor slot:
+///   ShopVendor
+///     â”œâ”€â”€ SphereCollider     Is Trigger = true, radius ~2
+///     â”œâ”€â”€ ShopSystem         (this script)
+///     â”œâ”€â”€ SpriteRenderer     vendor visual
+///     â””â”€â”€ Billboard
+///
+/// Inspector setup:
+///   shopMode  = Run
+///   itemToSell = drag the Item component from a child GO
+///   price     = cost in AngelDust
+/// </summary>
 public class ShopSystem : MonoBehaviour
 {
-    public enum ShopType { Lobby, Run }
+    public enum ShopType { Run }   // Lobby mode removed â€” use LobbyShopUI instead
 
-    [Header("Configuración de Tienda")]
-    public ShopType shopMode; // Seleccionable en el Inspector: Lobby o Run
-    public Item itemToSell;   // El ScriptableObject del ítem
-    public int price;         // Precio del artículo
+    [Header("ConfiguraciÃ³n")]
+    public ShopType shopMode = ShopType.Run;
+    public Item itemToSell;
+    public int price;
 
-    [Header("Interacción 3D")]
-    public float interactionRange = 3f;
+    [Header("UI")]
+    public GameObject interactPrompt;   // "Pulsa E para comprar" panel
 
-    void Update()
+    private PlayerController playerController;
+    private bool playerInRange = false;
+    private bool sold = false;
+
+    void Start()
     {
-        // Detectamos la interacción (puedes cambiar 'E' por la que prefieras)
-        if (Input.GetKeyDown(KeyCode.E))
+        if (interactPrompt != null) interactPrompt.SetActive(false);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (sold || !other.CompareTag("Player")) return;
+
+        playerController = other.GetComponent<PlayerController>();
+        if (playerController == null) return;
+
+        playerInRange = true;
+        if (interactPrompt != null) interactPrompt.SetActive(true);
+        playerController.OnActionPressed += TryPurchase;
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (!other.CompareTag("Player")) return;
+
+        playerInRange = false;
+        if (interactPrompt != null) interactPrompt.SetActive(false);
+
+        if (playerController != null)
         {
-            TryPurchase();
+            playerController.OnActionPressed -= TryPurchase;
+            playerController = null;
         }
     }
 
     private void TryPurchase()
     {
-        // Localizamos al jugador por su Tag
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player == null) return;
+        if (sold || !playerInRange || playerController == null) return;
+        if (itemToSell == null)
+        {
+            Debug.LogWarning("[ShopSystem] itemToSell not assigned.");
+            return;
+        }
 
-        // Comprobación de distancia en el espacio 3D
-        float distance = Vector3.Distance(transform.position, player.transform.position);
-        if (distance > interactionRange) return;
+        if (!PlayerWallet.instance.CanAfford(price))
+        {
+            Debug.Log($"[Shop] AngelDust insuficiente. Necesitas {price}, tienes {PlayerWallet.instance.angelDust}.");
+            return;
+        }
 
-        // Lógica de transacción según el modo de tienda
-        if (shopMode == ShopType.Lobby)
-        {
-            HandleLobbyPurchase();
-        }
-        else
-        {
-            HandleRunPurchase();
-        }
-    }
-
-    private void HandleLobbyPurchase()
-    {
-        // Comprobamos moneda persistente (monedas del nexo)
-        if (PlayerWallet.instance.permanentMoney >= price)
-        {
-            PlayerWallet.instance.SpendPermanentMoney(price); // Gastamos el dinero persistente
-            CompleteTransaction();
-        }
-        else
-        {
-            Debug.Log("<color=red>Tienda:</color> No tienes suficiente dinero persistente.");
-        }
-    }
-
-    private void HandleRunPurchase()
-    {
-        // Comprobamos moneda de la run (Angel Dust)
-        if (PlayerWallet.instance.CanAfford(price))
-        {
-            PlayerWallet.instance.SpendDust(price);
-            CompleteTransaction();
-        }
-        else
-        {
-            Debug.Log("<color=red>Tienda:</color> No tienes suficiente Angel Dust.");
-        }
-    }
-
-    private void CompleteTransaction()
-    {
-        // Añadimos al inventario y confirmamos
+        PlayerWallet.instance.SpendDust(price);
         PlayerInventory.instance.AddItem(itemToSell);
-        Debug.Log($"<color=green>Compra Exitosa:</color> Has adquirido {itemToSell.itemName}");
+        Debug.Log($"[Shop] Comprado: {itemToSell.itemName}");
 
-        // Aquí podrías añadir un efecto visual o sonido
+        sold = true;
+        if (interactPrompt != null) interactPrompt.SetActive(false);
+        if (playerController != null) playerController.OnActionPressed -= TryPurchase;
+
+        // Optional: hide vendor visually
+        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
+        if (sr != null) sr.enabled = false;
+    }
+
+    void OnDestroy()
+    {
+        if (playerController != null)
+            playerController.OnActionPressed -= TryPurchase;
     }
 }
