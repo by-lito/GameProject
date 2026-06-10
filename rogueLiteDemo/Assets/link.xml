@@ -1,0 +1,9 @@
+<linker>
+  <assembly fullname="Assembly-CSharp">
+    <type fullname="PlayerStats" preserve="all"/>
+  </assembly>
+  <assembly fullname="Firebase.Firestore" preserve="all"/>
+  <assembly fullname="Firebase.Auth" preserve="all"/>
+  <assembly fullname="Firebase.App" preserve="all"/>
+  <assembly fullname="Firebase.Platform" preserve="all"/>
+</linker>
