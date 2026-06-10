@@ -32,6 +32,8 @@ public class GameBootstrap : MonoBehaviour
     {
         EnsureGameManager();
         EnsureWallet();
+        EnsureStatsTracker();
+        EnsureEventSystem();
         Debug.Log("[Bootstrap] Core systems initialized.");
     }
 
@@ -55,6 +57,28 @@ public class GameBootstrap : MonoBehaviour
         go.AddComponent<PlayerWallet>();
         DontDestroyOnLoad(go);
         Debug.Log("[Bootstrap] PlayerWallet persistente creada.");
+    }
+
+    private void EnsureStatsTracker()
+    {
+        if (StatsTracker.Instance != null) return;
+        GameObject go = new GameObject("StatsTracker");
+        go.AddComponent<StatsTracker>();  
+        Debug.Log("[Bootstrap] StatsTracker persistente creado.");
+    }
+
+    private void EnsureEventSystem()
+    {
+        var existing = FindAnyObjectByType<UnityEngine.EventSystems.EventSystem>();
+        if (existing != null)
+        {
+            DontDestroyOnLoad(existing.gameObject);
+            return;
+        }
+        GameObject go = new GameObject("EventSystem");
+        go.AddComponent<UnityEngine.EventSystems.EventSystem>();
+        go.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
+        DontDestroyOnLoad(go);
     }
 
     private void LoadFirstScene()

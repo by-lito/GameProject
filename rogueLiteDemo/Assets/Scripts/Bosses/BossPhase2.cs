@@ -169,6 +169,8 @@ public class BossPhase2 : MonoBehaviour
 
         // --- FINAL STEP: LOAD YOUR BOOT SCENE ---
         // Ensure your "Boot" scene is added in Build Settings
+        StatsTracker.Instance?.AddRunCompleted();
+        StatsTracker.Instance?.Flush();
         UnityEngine.SceneManagement.SceneManager.LoadScene("Boot");
 
         Destroy(gameObject);
