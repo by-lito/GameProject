@@ -54,15 +54,6 @@ public class PlayerWallet : MonoBehaviour
         Debug.Log("Run terminada. El Polvo de �ngel se ha esfumado.");
     }
 
-    public bool CanAfford(int cost) => angelDust >= cost;
-
-    public bool SpendDust(int cost)
-    {
-        if (angelDust < cost) return false;
-        angelDust -= cost;
-        OnAngelDustChanged?.Invoke(angelDust);
-        return true;
-    }
 
     // Legacy — kept for Firebase save compatibility
     public void AddEndLevelReward(int amount)
@@ -86,6 +77,7 @@ public class PlayerWallet : MonoBehaviour
         {
             // Restamos el coste al total de polvo de �ngel
             angelDust -= cost;
+            OnAngelDustChanged?.Invoke(angelDust);
             return true;
         }
         return false;
