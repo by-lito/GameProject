@@ -151,6 +151,11 @@ MonoBehaviour:
   runSequence: 00000000000000000100000002000000
   combatPool:
   - Room_Combat_01
+  - Room_Combat_02
+  - Room_Combat_03
+  - Room_Combat_04
+  - Room_Combat_05
+  - Room_Combat_06
   shopScene: Room_Shop_01
   bossScene: Room_Boss_01
   lobbyScene: Lobby_3D
