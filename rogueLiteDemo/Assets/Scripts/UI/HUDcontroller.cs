@@ -1,68 +1,72 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement; // <-- IMPORTANTE: Añade esta línea para controlar escenas
+using UnityEngine.SceneManagement;
 using TMPro;
 
+/// <summary>
+/// Persists across scenes. Subscribes to PlayerWallet.OnAngelDustChanged
+/// so AngelDust updates automatically without polling.
+/// PlayerController.ActualizarHUDLocal() already handles health + coins.
+/// </summary>
 public class HUDController : MonoBehaviour
 {
     public static HUDController Instance { get; private set; }
 
     [Header("Componentes de UI")]
     [SerializeField] private Slider barraDeVida;
-    [SerializeField] private TextMeshProUGUI monedasText;
+    [SerializeField] private TextMeshProUGUI monedasText;    // lobby coins
+    [SerializeField] private TextMeshProUGUI polvoText;      // AngelDust (run)
     [SerializeField] private TextMeshProUGUI salasText;
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
-        DontDestroyOnLoad(gameObject); // Nos aseguramos de que sea persistente
-
-        // Nos suscribimos al evento de carga de escenas de Unity
+        DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDestroy()
     {
-        // Limpiamos el evento al destruirse para evitar errores de memoria
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        UnsubscribeWallet();
     }
 
+    private void Start()
+    {
+        SubscribeWallet();
+    }
+
+    // Re-subscribe when scene reloads (PlayerWallet persists, but Start() already ran)
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Si estamos en el Menú Principal, el HUD se esconde por completo
-        if (scene.name == "MainMenu")
-        {
-            ToggleHUDVisibility(false);
-        }
-        else
-        {
-            // En cualquier otra escena de juego (Lobby, Combate, etc.), el HUD se enciende solo
-            ToggleHUDVisibility(true);
-        }
+        ToggleHUDVisibility(scene.name != "MainMenu" && scene.name != "Boot");
+        SubscribeWallet();
     }
 
-    private void ToggleHUDVisibility(bool visible)
+    // ── Wallet subscription ───────────────────────────────────────────
+
+    private void SubscribeWallet()
     {
-        // Desactivamos el componente Canvas para ocultar los elementos de golpe
-        // sin romper las referencias de los scripts que intenten actualizar los textos
-        Canvas miCanvas = GetComponent<Canvas>();
-        if (miCanvas != null)
-        {
-            miCanvas.enabled = visible;
-        }
+        if (PlayerWallet.instance == null) return;
+        // Unsubscribe first to avoid double-subscription on scene reload
+        PlayerWallet.instance.OnAngelDustChanged -= SetPolvo;
+        PlayerWallet.instance.OnAngelDustChanged += SetPolvo;
+        // Refresh immediately
+        SetPolvo(PlayerWallet.instance.angelDust);
     }
+
+    private void UnsubscribeWallet()
+    {
+        if (PlayerWallet.instance != null)
+            PlayerWallet.instance.OnAngelDustChanged -= SetPolvo;
+    }
+
+    // ── Public setters (called by PlayerController.ActualizarHUDLocal) ─
 
     public void SetVidas(float saludActual)
     {
-        if (barraDeVida != null)
-        {
-            barraDeVida.value = saludActual; // La barra se moverá sola del 0 al 100
-        }
+        if (barraDeVida != null) barraDeVida.value = saludActual;
     }
 
     public void SetMonedas(int monedas)
@@ -73,5 +77,19 @@ public class HUDController : MonoBehaviour
     public void SetSalas(int salas)
     {
         if (salasText != null) salasText.text = "Salas: " + salas;
+    }
+
+    // Called automatically via OnAngelDustChanged event
+    private void SetPolvo(int polvo)
+    {
+        if (polvoText != null) polvoText.text = "✦ " + polvo;
+    }
+
+    // ── Visibility ────────────────────────────────────────────────────
+
+    private void ToggleHUDVisibility(bool visible)
+    {
+        Canvas c = GetComponent<Canvas>();
+        if (c != null) c.enabled = visible;
     }
 }

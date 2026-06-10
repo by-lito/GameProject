@@ -1,70 +1,73 @@
+ï»¿using System;
 using UnityEngine;
 
+/// <summary>
+/// Tracks both currencies. Persists across scenes via DontDestroyOnLoad.
+/// Fires events so HUD updates automatically without polling.
+///
+/// AngelDust   = run currency (resets on death, drops from enemies via CoinPickup)
+/// permanentMoney is legacy â€” lobby shop now uses PlayerController.coins instead.
+/// </summary>
 public class PlayerWallet : MonoBehaviour
 {
-    public static PlayerWallet instance; // Esto permite que otros scripts te encuentren fácil
+    public static PlayerWallet instance;
 
     [Header("RUN (Se pierde al morir)")]
     public int angelDust = 0;
 
-    [Header("LOBBY (Permanente)")]
-    public int memories = 0;
-    public int potionFragments = 0;
-    public int permanentMoney = 0; // Lo que ganas al final del nivel
+    [Header("LOBBY (Permanente â€” legacy, usar PlayerController.coins)")]
+    public int permanentMoney = 0;
 
+    // HUD subscribes to this to update AngelDust display without polling
+    public event Action<int> OnAngelDustChanged;
 
-    // Asegura de que solo haya una billetera en el juego y que se registre a sí misma al iniciar el juego.
     void Awake()
     {
-        instance = this; // Al empezar, este script se registra a sí mismo
+        // FIX: proper singleton + DontDestroyOnLoad
+        // Previously had no null check â†’ second scene would overwrite instance
+        // and wallet was destroyed on scene change â†’ all currency lost
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
-    // Esto se llama cuando matas al triángulo rojo
     public void AddAngelDust(int amount)
     {
         angelDust += amount;
-        Debug.Log("¡Polvo de Ángel recogido! Total: " + angelDust);
+        OnAngelDustChanged?.Invoke(angelDust);
+        Debug.Log($"[Wallet] +{amount} AngelDust â†’ Total: {angelDust}");
     }
 
-    // Llama a esto cuando el jugador muera o reinicie la partida
     public void ResetRun()
     {
         angelDust = 0;
-        Debug.Log("Run terminada. El Polvo de Ángel se ha esfumado.");
+        OnAngelDustChanged?.Invoke(angelDust);
+        Debug.Log("[Wallet] Run reseteada. AngelDust a 0.");
     }
 
-    // Esto se llama solo cuando tocas la meta/final del nivel
+    public bool CanAfford(int cost) => angelDust >= cost;
+
+    public bool SpendDust(int cost)
+    {
+        if (angelDust < cost) return false;
+        angelDust -= cost;
+        OnAngelDustChanged?.Invoke(angelDust);
+        return true;
+    }
+
+    // Legacy â€” kept for Firebase save compatibility
     public void AddEndLevelReward(int amount)
     {
         permanentMoney += amount;
-        Debug.Log("¡Nivel superado! Dinero para el Lobby: " + permanentMoney);
+        Debug.Log($"[Wallet] Recompensa de nivel: +{amount}. Total: {permanentMoney}");
     }
 
-    // Para la tienda de la RUN
-    // 1. Solo comprueba si tiene el dinero (sin restar nada)
-    public bool CanAfford(int cost)
-    {
-        return angelDust >= cost;
-    }
-
-    // 2. Usar este método para gastar polvo de ángel.
-    public bool SpendDust(int cost)
-    {
-        if (angelDust >= cost)
-        {
-            // Restamos el coste al total de polvo de ángel
-            angelDust -= cost;
-            return true;
-        }
-        return false;
-    }
-
-    //Para la tienda del LOBBY
-    // Método para gastar el dinero que no se pierde al morir (Lobby/Nexo)
     public void SpendPermanentMoney(int amount)
     {
-        // Restamos la cantidad al total permanente
         permanentMoney -= amount;
-        Debug.Log("Has gastado dinero permanente. Quedan: " + permanentMoney);
     }
 }
