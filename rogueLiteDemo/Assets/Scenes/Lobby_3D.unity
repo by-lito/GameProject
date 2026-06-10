@@ -283,14 +283,14 @@ RectTransform:
   m_GameObject: {fileID: 40256405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.68, y: 0.68, z: 0.68}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2135470763}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -781, y: 479}
+  m_AnchoredPosition: {x: -427, y: 238}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &40256407
@@ -425,7 +425,7 @@ MonoBehaviour:
   itemName: Bota (una solo)
   price: 0
   description: 
-  icon: {fileID: -168421969075237668, guid: 0470eb35273663548a07eda2335c2ea2, type: 3}
+  icon: {fileID: 3840669754812678891, guid: 6035c3684a17e7548830393259615810, type: 3}
   dustCost: 0
   lobbyCost: 0
   isUnlocked: 0
@@ -1305,7 +1305,7 @@ RectTransform:
   m_GameObject: {fileID: 429058644}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.05, y: 2.772727, z: 2.772727}
+  m_LocalScale: {x: 1.95, y: 1.7727269, z: 1.7727269}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 96456020}
@@ -2149,7 +2149,7 @@ MonoBehaviour:
   itemName: "Colch\xF3n viscol\xE1stico"
   price: 0
   description: 
-  icon: {fileID: -2703980163607832202, guid: ea61589eec0f91b43852d9a5f73deb05, type: 3}
+  icon: {fileID: 8785034863198750711, guid: 41320217c5fdea244a027c5bc576776e, type: 3}
   dustCost: 0
   lobbyCost: 0
   isUnlocked: 0
@@ -2302,14 +2302,14 @@ RectTransform:
   m_GameObject: {fileID: 1035727382}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.64, y: 0.64, z: 0.64}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2135470763}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -267, y: 479}
+  m_AnchoredPosition: {x: -180, y: 236}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1035727384
@@ -3415,7 +3415,7 @@ MonoBehaviour:
   itemName: Felicidad
   price: 0
   description: 
-  icon: {fileID: -5513050994037168576, guid: 9d142c1f78a294c4a891fd903302d3dd, type: 3}
+  icon: {fileID: -3188702180127858350, guid: b4c88c23fe324ec4b966b8542d401650, type: 3}
   dustCost: 0
   lobbyCost: 0
   isUnlocked: 0
@@ -3502,7 +3502,7 @@ RectTransform:
   m_GameObject: {fileID: 1396476646}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.05, y: 2.772727, z: 2.772727}
+  m_LocalScale: {x: 1.95, y: 1.7727269, z: 1.7727269}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 82276151}
@@ -4767,7 +4767,7 @@ RectTransform:
   m_GameObject: {fileID: 1765028458}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.67, y: 2.67, z: 2.67}
+  m_LocalScale: {x: 1.45, y: 1.45, z: 1.45}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1860983128}
@@ -4775,7 +4775,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 869, y: 463}
+  m_AnchoredPosition: {x: 463, y: 233}
   m_SizeDelta: {x: 34.77, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1765028460
@@ -4911,7 +4911,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -63}
+  m_AnchoredPosition: {x: 0, y: -24}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1777514660
@@ -4932,7 +4932,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 181.4
+  m_Spacing: 82.29
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -5025,7 +5025,7 @@ MonoBehaviour:
   itemName: Navajita
   price: 0
   description: 
-  icon: {fileID: -2776722652253093633, guid: c10d275159c28cf4581ef19982550efa, type: 3}
+  icon: {fileID: -1333439504715762810, guid: 39bc1d7512cbf834aac17e5abaea682c, type: 3}
   dustCost: 0
   lobbyCost: 0
   isUnlocked: 0
@@ -5080,7 +5080,7 @@ RectTransform:
   m_GameObject: {fileID: 1815165586}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.05, y: 2.772727, z: 2.772727}
+  m_LocalScale: {x: 1.95, y: 1.7727269, z: 1.7727269}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 262719480}
@@ -5463,7 +5463,7 @@ RectTransform:
   m_GameObject: {fileID: 1917198077}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.05, y: 2.772727, z: 2.772727}
+  m_LocalScale: {x: 1.95, y: 1.7727269, z: 1.7727269}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1249817501}
@@ -6019,7 +6019,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1035727383}
   - {fileID: 40256406}

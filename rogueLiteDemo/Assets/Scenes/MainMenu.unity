@@ -3143,6 +3143,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HUDController
   barraDeVida: {fileID: 1695552890}
   monedasText: {fileID: 832444178}
+  polvoText: {fileID: 0}
   salasText: {fileID: 1130878216}
 --- !u!1 &1198286910
 GameObject:
@@ -4544,7 +4545,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 877, y: -423}
+  m_AnchoredPosition: {x: 656, y: -401}
   m_SizeDelta: {x: 230, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1646145329
@@ -6248,6 +6249,10 @@ PrefabInstance:
     - target: {fileID: 7130152502172272482, guid: 924146c851afe5f4b9aa2e4d5a4833f5, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7709263380987152512, guid: 924146c851afe5f4b9aa2e4d5a4833f5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 656
       objectReference: {fileID: 0}
     - target: {fileID: 7738468431922547115, guid: 924146c851afe5f4b9aa2e4d5a4833f5, type: 3}
       propertyPath: m_Type
