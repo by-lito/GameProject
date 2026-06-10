@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "137031749159",
-    "project_id": "roguelitepf",
-    "storage_bucket": "roguelitepf.firebasestorage.app"
+    "project_number": "943720336994",
+    "project_id": "recuerda-db",
+    "storage_bucket": "recuerda-db.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:137031749159:android:b9908bff10687c568fc802",
+        "mobilesdk_app_id": "1:943720336994:android:fc962c562efc41d2db4b3b",
         "android_client_info": {
-          "package_name": "com.roguelite.game"
+          "package_name": "com.recuerda.game"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDrEWq2ZRQv4F9-6eCe61Q9xbNWED1QQ60"
+          "current_key": "AIzaSyBflEBot2y_6smDPmvBitHj9G0ktWJN5ac"
         }
       ],
       "services": {

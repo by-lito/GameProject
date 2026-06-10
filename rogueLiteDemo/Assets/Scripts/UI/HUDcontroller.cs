@@ -64,6 +64,24 @@ public class HUDController : MonoBehaviour
 
     // ── Public setters (called by PlayerController.ActualizarHUDLocal) ─
 
+    private int lastMonedas = -1;
+    private int lastSalas = -1;
+
+    private void Update()
+    {
+        if (PlayerWallet.instance != null && PlayerWallet.instance.angelDust != lastMonedas)
+        {
+            lastMonedas = PlayerWallet.instance.angelDust;
+            SetMonedas(lastMonedas);
+        }
+
+        if (RunManager.Instance != null && RunManager.Instance.RoomsCompletedThisRun != lastSalas)
+        {
+            lastSalas = RunManager.Instance.RoomsCompletedThisRun;
+            SetSalas(lastSalas);
+        }
+    }
+
     public void SetVidas(float saludActual)
     {
         if (barraDeVida != null) barraDeVida.value = saludActual;

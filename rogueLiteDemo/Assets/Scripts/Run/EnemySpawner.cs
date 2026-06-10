@@ -61,6 +61,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void HandleEnemyDeath()
     {
+        StatsTracker.Instance?.AddEnemyDefeated();
         AliveCount--;
         if (AliveCount <= 0) Clear();
     }

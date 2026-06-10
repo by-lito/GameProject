@@ -21,6 +21,7 @@ public class PlayerWallet : MonoBehaviour
     // HUD subscribes to this to update AngelDust display without polling
     public event Action<int> OnAngelDustChanged;
 
+
     void Awake()
     {
         // FIX: proper singleton + DontDestroyOnLoad
@@ -35,11 +36,14 @@ public class PlayerWallet : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    
+    // Esto se llama cuando matas al tri�ngulo rojo
     public void AddAngelDust(int amount)
     {
         angelDust += amount;
         OnAngelDustChanged?.Invoke(angelDust);
-        Debug.Log($"[Wallet] +{amount} AngelDust → Total: {angelDust}");
+        StatsTracker.Instance?.AddMoney(amount);
+        Debug.Log("�Polvo de �ngel recogido! Total: " + angelDust);
     }
 
     public void ResetRun()
@@ -47,6 +51,7 @@ public class PlayerWallet : MonoBehaviour
         angelDust = 0;
         OnAngelDustChanged?.Invoke(angelDust);
         Debug.Log("[Wallet] Run reseteada. AngelDust a 0.");
+        Debug.Log("Run terminada. El Polvo de �ngel se ha esfumado.");
     }
 
     public bool CanAfford(int cost) => angelDust >= cost;
@@ -64,8 +69,30 @@ public class PlayerWallet : MonoBehaviour
     {
         permanentMoney += amount;
         Debug.Log($"[Wallet] Recompensa de nivel: +{amount}. Total: {permanentMoney}");
+        Debug.Log("�Nivel superado! Dinero para el Lobby: " + permanentMoney);
     }
 
+    // Para la tienda de la RUN
+    // 1. Solo comprueba si tiene el dinero (sin restar nada)
+    public bool CanAfford(int cost)
+    {
+        return angelDust >= cost;
+    }
+
+    // 2. Usar este m�todo para gastar polvo de �ngel.
+    public bool SpendDust(int cost)
+    {
+        if (angelDust >= cost)
+        {
+            // Restamos el coste al total de polvo de �ngel
+            angelDust -= cost;
+            return true;
+        }
+        return false;
+    }
+
+    //Para la tienda del LOBBY
+    // M�todo para gastar el dinero que no se pierde al morir (Lobby/Nexo)
     public void SpendPermanentMoney(int amount)
     {
         permanentMoney -= amount;
